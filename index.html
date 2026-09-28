@@ -1100,357 +1100,6 @@
 #bookEditor .book-editor-identity textarea{min-height:100px}
 .book-editor-identity{margin:16px 0}
 .book-editor-identity summary{cursor:pointer;margin-bottom:12px}
-
-/* === RHODES — habillage fidèle à la maquette de référence === */
-:root{
-  --rh-leather:#3b2a1c;
-  --rh-leather-dark:#24170f;
-  --rh-sepia:#6b5a3e;
-  --rh-paper:#eadfc6;
-  --rh-paper-light:#f4ead4;
-  --rh-brass:#b08d3c;
-  --rh-brass-light:#d1b16c;
-  --rh-burgundy:#6b1f2d;
-  --rh-green:#213a2d;
-}
-body{
-  background:
-    linear-gradient(rgba(22,13,8,.20),rgba(22,13,8,.20)),
-    repeating-linear-gradient(90deg,#4a2b1b 0 7px,#5a3421 7px 14px,#382015 14px 20px);
-}
-.rhodes-reference-masthead{
-  width:min(1450px,100%);
-  height:145px;
-  margin:0 auto;
-  position:relative;
-  display:flex;
-  align-items:center;
-  overflow:hidden;
-  padding:18px 44px;
-  color:#f0dfb8;
-  border:9px solid #2c190f;
-  border-bottom:0;
-  background:
-    linear-gradient(90deg,rgba(28,16,10,.96) 0 42%,rgba(53,42,27,.38) 56%,rgba(224,208,167,.18) 100%),
-    radial-gradient(circle at 80% 20%,rgba(244,226,179,.34),transparent 16%),
-    linear-gradient(155deg,transparent 0 49%,rgba(92,102,89,.9) 50% 55%,transparent 56%),
-    linear-gradient(205deg,transparent 0 45%,rgba(112,120,103,.86) 46% 52%,transparent 53%),
-    linear-gradient(#9ea89a 0 39%,#6f796b 40% 49%,#425343 50% 66%,#263a2c 67% 100%);
-  box-shadow:0 10px 25px rgba(0,0,0,.42);
-}
-.rhodes-reference-masthead:before{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:
-    repeating-linear-gradient(90deg,rgba(255,255,255,.016) 0 1px,transparent 1px 4px),
-    linear-gradient(90deg,rgba(74,40,21,.28),transparent 45%);
-}
-.rhodes-sign-medical{
-  position:relative;z-index:2;
-  width:70px;height:70px;flex:0 0 70px;margin-right:18px;
-  display:grid;place-items:center;
-  border:2px solid var(--rh-brass);border-radius:50%;
-  background:radial-gradient(circle,#6a1d29 0 43%,#2d1b15 44% 62%,#17110d 63%);
-  color:#d9b660;font-size:39px;
-  box-shadow:0 0 0 5px rgba(176,141,60,.16);
-}
-.rhodes-sign-copy{position:relative;z-index:2;display:flex;flex-direction:column;line-height:.92;text-shadow:0 2px 2px #000}
-.rhodes-sign-copy strong{font-size:39px;letter-spacing:2px}
-.rhodes-sign-copy span{font-size:28px;letter-spacing:4px;text-align:center;margin-top:8px}
-.rhodes-sign-copy small{font-size:10px;letter-spacing:3px;text-align:center;margin-top:14px;color:#cbb58a}
-.rhodes-town-sign{
-  margin-left:auto;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;
-  padding-right:26px;color:#352b21;text-shadow:0 1px rgba(255,255,255,.28);
-}
-.rhodes-town-sign strong{font-size:35px;font-style:italic;font-weight:normal;transform:rotate(-4deg)}
-.rhodes-town-sign span{font-size:12px;font-style:italic;margin-top:4px}
-.app{
-  width:min(1370px,calc(100% - 34px));
-  margin:0 auto 28px;
-  min-height:calc(100vh - 145px);
-  grid-template-columns:265px minmax(0,1fr);
-  border:9px solid #2c190f;border-top:0;
-  background:#25170f;
-  box-shadow:0 20px 50px rgba(0,0,0,.50);
-}
-.sidebar{
-  padding:22px 18px;
-  background:
-    linear-gradient(rgba(23,33,26,.97),rgba(15,23,18,.99)),
-    repeating-linear-gradient(90deg,rgba(255,255,255,.012) 0 1px,transparent 1px 4px);
-  border-right:1px solid rgba(176,141,60,.45);
-}
-.brand{padding-bottom:16px;margin-bottom:14px;border-bottom:1px solid rgba(176,141,60,.22)}
-.brand .seal{width:58px;height:58px;font-size:30px;margin-bottom:10px}
-.brand h1{font-size:18px;line-height:1.04;color:#f0e2c1}
-.brand p{font-size:10px;color:#bca77a}
-.nav{gap:5px}
-.nav button{
-  min-height:45px;padding:11px 10px 11px 42px;border-radius:2px;
-  color:#e6dcc6;font-size:14px;
-}
-.nav button.active{
-  background:linear-gradient(90deg,rgba(176,141,60,.17),rgba(44,52,39,.44));
-  border:1px solid rgba(176,141,60,.40);
-  border-left:4px solid var(--rh-brass-light);
-  color:#f5e9cc;box-shadow:none;
-}
-.nav button:hover{background:rgba(176,141,60,.09);border-color:rgba(176,141,60,.24)}
-main{
-  min-width:0;padding:14px 14px 34px;
-  background:
-    linear-gradient(rgba(235,220,189,.97),rgba(226,210,176,.97)),
-    repeating-linear-gradient(0deg,rgba(76,55,34,.035) 0 1px,transparent 1px 4px);
-  color:#34291a;
-}
-.topbar{
-  min-height:72px;margin:0 0 12px;padding:12px 18px;
-  background:linear-gradient(90deg,#1f2e25,#2b3b2f 62%,#202f25);
-  border:1px solid #866b39;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.03),0 5px 13px rgba(0,0,0,.18);
-}
-.topbar h2{font-size:27px;color:#efe2c4}
-.topbar p{font-size:11px;color:#b9a77d}
-.topbar-bureau-shortcut{
-  min-width:220px;padding:10px 28px;background:linear-gradient(#742537,#5d1d2c);
-  border-color:#a98041;color:#f2e5c7;
-}
-.date-badge{font-size:11px;color:#c7b690}.date-badge strong{font-size:17px;color:#efe2c4}
-.rhodes-reference-hero{
-  min-height:184px;margin-bottom:12px;padding:28px 28px;
-  position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:30px;
-  border:1px solid #8f743e;border-radius:4px;isolation:isolate;
-  background:
-    linear-gradient(90deg,rgba(15,25,19,.88) 0%,rgba(22,32,24,.52) 48%,rgba(37,44,34,.12) 100%),
-    radial-gradient(circle at 77% 23%,rgba(243,226,179,.35),transparent 16%),
-    linear-gradient(154deg,transparent 0 45%,#6f766b 46% 51%,transparent 52%),
-    linear-gradient(208deg,transparent 0 42%,#8c9188 43% 49%,transparent 50%),
-    linear-gradient(#9aa397 0 35%,#687265 36% 48%,#424f42 49% 66%,#2a3a2c 67% 100%);
-  box-shadow:0 5px 13px rgba(0,0,0,.18);
-}
-.rhodes-reference-hero:after{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:48%;z-index:-1;opacity:.92;
-  background:
-    repeating-linear-gradient(90deg,rgba(22,46,30,.88) 0 4px,transparent 4px 18px),
-    linear-gradient(#2a3f30,#1e2f23);
-  clip-path:polygon(0 68%,4% 35%,8% 70%,13% 22%,18% 72%,23% 38%,29% 70%,34% 17%,39% 72%,46% 32%,52% 70%,58% 35%,64% 66%,70% 19%,76% 70%,82% 29%,88% 64%,94% 20%,100% 61%,100% 100%,0 100%);
-}
-.rhodes-reference-hero-copy{position:relative;z-index:2;max-width:62%;text-shadow:0 2px 4px rgba(0,0,0,.60)}
-.rhodes-reference-hero-copy span{display:block;color:#d2b36b;font-size:17px;margin-bottom:5px}
-.rhodes-reference-hero-copy h3{margin:0;color:#fff8e8;font-size:38px;line-height:1.03}
-.rhodes-reference-hero-copy p{margin:10px 0 0;color:#e5dbc5;font-size:15px}
-.rhodes-reference-hero blockquote{
-  position:relative;z-index:2;width:min(320px,34%);margin:0;padding:16px 18px;
-  background:rgba(240,227,198,.93);border:1px solid rgba(91,63,38,.34);
-  color:#5a4937;font-style:italic;line-height:1.5;
-  box-shadow:0 5px 14px rgba(0,0,0,.20);
-}
-#dashboard .grid.cards{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
-#dashboard .metric{
-  min-height:112px;padding:16px 12px 14px 66px;
-  background:
-    linear-gradient(rgba(244,233,209,.97),rgba(234,218,183,.97)),
-    repeating-linear-gradient(0deg,rgba(79,55,34,.025) 0 1px,transparent 1px 4px);
-  border:1px solid rgba(135,103,50,.42);box-shadow:0 4px 10px rgba(0,0,0,.10);
-}
-#dashboard .metric.accent{background:linear-gradient(145deg,#4b3728,#342419)}
-#dashboard .metric:after{
-  content:attr(data-rhodes-icon);position:absolute;left:14px;top:50%;transform:translateY(-50%);
-  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
-  background:rgba(176,141,60,.15);border:1px solid rgba(176,141,60,.38);color:#694d25;font-size:19px;
-}
-#dashboard .metric.accent:after{color:#ead8ac}
-#dashboard .metric .label{font-size:11px;letter-spacing:.4px;text-transform:none;color:#584a37}
-#dashboard .metric .value{font-size:25px;color:#4d371e;margin-top:7px}
-#dashboard .metric .sub{font-size:11px;color:#746650}
-#dashboard .metric.accent .label,#dashboard .metric.accent .sub{color:#d2c2a1}
-#dashboard .metric.accent .value{color:#f3e6c7}
-#dashboard .dashboard-three{grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px}
-#dashboard .dashboard-three .pricing-card{grid-column:1/-1}
-#dashboard .card{
-  background:
-    linear-gradient(rgba(244,233,209,.97),rgba(234,218,183,.97)),
-    repeating-linear-gradient(0deg,rgba(79,55,34,.025) 0 1px,transparent 1px 4px);
-  border:1px solid rgba(135,103,50,.42);color:#34291a;box-shadow:0 4px 11px rgba(0,0,0,.11);
-}
-#dashboard .section-title{
-  min-height:46px;padding:12px 14px;
-  background:linear-gradient(90deg,#4e3728,#5b4030);
-  border-bottom:1px solid #886b3c;color:#f1e3c4;font-size:16px;
-}
-#dashboard .section-title small{color:#c9b691}
-#dashboard .card-body,#dashboard td{color:#34291a}
-#dashboard td{background:rgba(248,238,216,.76);border-color:rgba(101,75,47,.28)}
-#dashboard th{background:#5b4030;color:#f0e1bf;border-color:#987440}
-#dashboard input,#dashboard select,#dashboard textarea{background:#f6ead0;color:#34291a;border-color:#a58a56}
-#dashboard .btn{background:linear-gradient(#742537,#5c1d2b);border-color:#a37d42;color:#f2e5c7}
-#dashboard .btn.good{background:linear-gradient(#4f6e4b,#38543b);border-color:#74896a}
-#dashboard .btn.secondary{background:linear-gradient(#6a4b34,#4e3627)}
-#dashboard .btn.ghost{color:#604d33;border-color:#8e7145}
-@media(max-width:1100px){
-  .rhodes-reference-masthead{height:120px;padding:14px 22px}
-  .rhodes-sign-copy strong{font-size:30px}.rhodes-sign-copy span{font-size:22px}.rhodes-town-sign{display:none}
-  .app{width:100%;border-left:0;border-right:0}
-  #dashboard .grid.cards{grid-template-columns:repeat(2,1fr)}
-  #dashboard .dashboard-three{grid-template-columns:1fr 1fr}
-}
-@media(max-width:850px){
-  .rhodes-reference-masthead{display:none}
-  .app{width:100%;margin:0;border:0;grid-template-columns:1fr}
-  .rhodes-reference-hero-copy{max-width:100%}.rhodes-reference-hero blockquote{display:none}
-  #dashboard .grid.cards,#dashboard .dashboard-three{grid-template-columns:1fr}
-}
-
-/* === RHODES V2 — correction de fidélité visuelle === */
-html,body{width:100%;max-width:none}
-body{overflow-x:hidden}
-.rhodes-reference-masthead{
-  width:100%!important;
-  max-width:none!important;
-  height:160px!important;
-  margin:0!important;
-  border-left:0!important;border-right:0!important;
-  border-top:0!important;
-  border-bottom:8px solid #2b190f!important;
-  padding-left:78px!important;padding-right:52px!important;
-}
-.app{
-  width:100%!important;
-  max-width:none!important;
-  margin:0!important;
-  border-left:0!important;border-right:0!important;border-bottom:0!important;
-  grid-template-columns:292px minmax(0,1fr)!important;
-}
-.sidebar{
-  padding:20px 22px 26px!important;
-  background:
-    linear-gradient(rgba(17,31,24,.985),rgba(11,22,17,.995)),
-    radial-gradient(circle at 50% 100%,rgba(68,86,63,.18),transparent 42%)!important;
-}
-.brand{
-  display:flex!important;align-items:center!important;text-align:left!important;gap:14px!important;
-  margin:0 0 16px!important;padding:0 0 16px!important;
-}
-.brand .seal{margin:0!important;width:66px!important;height:66px!important;flex:0 0 66px!important}
-.brand h1{font-size:20px!important}
-.brand p{font-size:10px!important;letter-spacing:1.8px!important}
-.nav button{font-size:16px!important;min-height:50px!important;padding-left:48px!important}
-.nav .ico{left:15px!important;top:13px!important;font-size:19px!important}
-main{padding:14px 16px 34px!important}
-.topbar{
-  min-height:66px!important;
-  padding:10px 14px!important;
-  margin-bottom:10px!important;
-  display:grid!important;
-  grid-template-columns:minmax(360px,1fr) auto auto!important;
-  align-items:center!important;
-  gap:16px!important;
-  background:linear-gradient(90deg,#172d24,#203b2f 62%,#172f25)!important;
-}
-.rhodes-searchbar{
-  width:min(520px,100%);
-  height:42px;
-  display:flex;align-items:center;gap:11px;
-  padding:0 15px;
-  border:1px solid rgba(222,207,171,.26);
-  border-radius:4px;
-  background:rgba(255,255,255,.035);
-  color:#aeb7ab;
-  font-size:14px;
-}
-.rhodes-search-icon{font-size:24px;color:#d2b16b;line-height:1}
-.rhodes-hidden-title,.rhodes-hidden-subtitle,.rhodes-date-hidden{display:none!important}
-.topbar-bureau-shortcut{
-  position:static!important;transform:none!important;left:auto!important;top:auto!important;
-  min-width:190px!important;padding:10px 22px!important;
-}
-.rhodes-profile-chip{
-  display:flex;align-items:center;gap:10px;color:#eadfc7;white-space:nowrap
-}
-.rhodes-bell{
-  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
-  border:1px solid rgba(210,177,107,.38);color:#d2b16b;font-size:16px
-}
-.rhodes-avatar{
-  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
-  background:#6b1f2d;border:2px solid #b08d3c;color:#ead8ab;font-size:20px
-}
-.rhodes-profile-text{display:flex;flex-direction:column;line-height:1.15}
-.rhodes-profile-text strong{font-size:14px;color:#f2e7cd}
-.rhodes-profile-text small{font-size:10px;color:#bba985}
-.rhodes-reference-hero{
-  min-height:180px!important;
-  margin-bottom:12px!important;
-  border-radius:3px!important;
-  background:
-    linear-gradient(90deg,rgba(6,18,13,.78) 0%,rgba(15,27,20,.30) 52%,rgba(25,37,28,.10) 100%),
-    radial-gradient(circle at 78% 19%,rgba(244,227,182,.30),transparent 15%),
-    linear-gradient(155deg,transparent 0 46%,#606d62 47% 53%,transparent 54%),
-    linear-gradient(208deg,transparent 0 42%,#7f887d 43% 49%,transparent 50%),
-    linear-gradient(#98a496 0 35%,#697467 36% 48%,#455448 49% 66%,#293c2f 67% 100%)!important;
-}
-.rhodes-reference-hero-copy h3{font-size:44px!important}
-.rhodes-reference-hero-copy p{font-size:16px!important}
-#dashboard .grid.cards{
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  gap:10px!important;
-}
-#dashboard .grid.cards .metric:nth-child(5){display:none!important}
-#dashboard .metric{min-height:128px!important;padding:18px 14px 15px 78px!important}
-#dashboard .metric:after{width:48px!important;height:48px!important;left:17px!important;font-size:22px!important}
-#dashboard .metric .label{font-size:13px!important}
-#dashboard .metric .value{font-size:29px!important}
-#dashboard .metric .sub{font-size:12px!important}
-#dashboard .dashboard-three{
-  grid-template-columns:1fr 1fr 1fr!important;
-  gap:10px!important;
-  margin-top:10px!important;
-}
-#dashboard .dashboard-three .stock-card{grid-column:2!important;grid-row:1!important}
-#dashboard .dashboard-three .movements-card{grid-column:1!important;grid-row:1!important}
-#dashboard .dashboard-three .smoke-card{grid-column:1 / -1!important;grid-row:2!important;margin-top:6px!important}
-#dashboard .dashboard-three .pricing-card{grid-column:1 / -1!important;grid-row:3!important;margin-top:6px!important}
-#dashboard .dashboard-three .movements-card,
-#dashboard .dashboard-three .stock-card{
-  min-height:260px!important;
-}
-#dashboard .dashboard-three:after{
-  content:"Consultations du jour\A\A09:00   John MacAllister\A11:00   Mary O’Leary\A14:30   Amos Reynolds\A17:00   Clara Whitmore";
-  white-space:pre-line;
-  grid-column:3;grid-row:1;
-  min-height:260px;
-  padding:58px 18px 18px;
-  background:
-    linear-gradient(rgba(244,233,209,.97),rgba(234,218,183,.97)),
-    repeating-linear-gradient(0deg,rgba(79,55,34,.025) 0 1px,transparent 1px 4px);
-  border:1px solid rgba(135,103,50,.42);
-  box-shadow:0 4px 11px rgba(0,0,0,.11);
-  color:#3e2d1c;
-  font-size:15px;
-  line-height:2.05;
-  position:relative;
-}
-#dashboard .dashboard-three:before{
-  content:"CONSULTATIONS DU JOUR";
-  grid-column:3;grid-row:1;
-  align-self:start;
-  z-index:2;
-  padding:12px 14px;
-  background:linear-gradient(90deg,#4e3728,#5b4030);
-  border-bottom:1px solid #886b3c;
-  color:#f1e3c4;font-size:16px;font-weight:700;
-}
-#ordersCard{margin-top:10px!important}
-@media(max-width:1200px){
-  .rhodes-reference-masthead{padding-left:28px!important}
-  .rhodes-sign-copy strong{font-size:30px!important}.rhodes-sign-copy span{font-size:22px!important}
-  .rhodes-town-sign{display:none!important}
-  .app{grid-template-columns:250px minmax(0,1fr)!important}
-  #dashboard .grid.cards{grid-template-columns:repeat(2,1fr)!important}
-  #dashboard .dashboard-three{grid-template-columns:1fr 1fr!important}
-  #dashboard .dashboard-three .movements-card,#dashboard .dashboard-three .stock-card,
-  #dashboard .dashboard-three .smoke-card,#dashboard .dashboard-three .pricing-card{grid-column:auto!important;grid-row:auto!important}
-  #dashboard .dashboard-three:before,#dashboard .dashboard-three:after{display:none!important}
-}
 </style>
 </head>
 <body class="locked" data-site-version="2026-09-21-1806">
@@ -1479,20 +1128,6 @@ main{padding:14px 16px 34px!important}
       <button class="btn danger" id="accessLogoutBtn" type="button">Se déconnecter</button>
     </div>
     <div class="auth-message" id="accessMessage"></div>
-  </div>
-</div>
-
-
-<div class="rhodes-reference-masthead" aria-hidden="true">
-  <div class="rhodes-sign-medical">⚕</div>
-  <div class="rhodes-sign-copy">
-    <strong>CABINET MÉDICAL</strong>
-    <span>DE RHODES</span>
-    <small>EST. 1898 · SOINS · REMÈDES · COMMUNAUTÉ</small>
-  </div>
-  <div class="rhodes-town-sign">
-    <strong>Rhodes</strong>
-    <span>Cœur du New Hanover · depuis 1898</span>
   </div>
 </div>
 
@@ -1547,52 +1182,40 @@ main{padding:14px 16px 34px!important}
 
   <main>
     <header class="topbar">
-      <div class="rhodes-searchbar" aria-hidden="true"><span class="rhodes-search-icon">⌕</span><span>Rechercher un patient, un objet, une consultation...</span></div>
-      <h2 id="pageTitle" class="rhodes-hidden-title">Tableau de bord</h2>
-      <p class="rhodes-hidden-subtitle">Registre du cabinet · gestion du stock et des dépenses</p>
-      <button class="topbar-bureau-shortcut" type="button" data-goto="bureau"><span>✉</span> LE BUREAU</button>
-      <div class="rhodes-profile-chip">
-        <span class="rhodes-bell">♧</span>
-        <span class="rhodes-avatar">⚕</span>
-        <span class="rhodes-profile-text"><strong id="rhodesProfileName">Médecin</strong><small>Cabinet de Rhodes</small></span>
+      <div>
+        <h2 id="pageTitle">Tableau de bord</h2>
+        <p>Registre du cabinet · gestion du stock et des dépenses</p>
       </div>
-      <div class="date-badge rhodes-date-hidden">
+      <button class="topbar-bureau-shortcut" type="button" data-goto="bureau"><span>✉</span> LE BUREAU</button>
+      <div class="date-badge">
         Registre ouvert le
         <strong id="todayLabel">—</strong>
       </div>
     </header>
 
     <section id="dashboard" class="view active">
-      <div class="rhodes-reference-hero">
-        <div class="rhodes-reference-hero-copy">
-          <span>Bienvenue au</span>
-          <h3>Cabinet Médical de Rhodes</h3>
-          <p>Soins, remèdes et espoir pour les habitants du New Hanover.</p>
-        </div>
-        <blockquote>« Parce qu’une communauté en bonne santé est une communauté plus forte. »</blockquote>
-      </div>
       <div class="grid cards">
-        <div class="card metric accent" data-rhodes-icon="◉">
+        <div class="card metric accent">
           <div class="label">Montant de la caisse</div>
           <div class="value" id="dashCash">0,00 $</div>
           <div class="sub">Argent disponible</div>
         </div>
-        <div class="card metric" data-rhodes-icon="▣">
+        <div class="card metric">
           <div class="label">Valeur du stock</div>
           <div class="value" id="dashStockValue">0,00 $</div>
           <div class="sub">Selon les prix unitaires actuels</div>
         </div>
-        <div class="card metric" data-rhodes-icon="⚕">
+        <div class="card metric">
           <div class="label">Valeur pharmacie</div>
           <div class="value" id="dashPharmacyValue">0,00 $</div>
           <div class="sub">Valeur de vente du stock en pharmacie</div>
         </div>
-        <div class="card metric" data-rhodes-icon="⌂">
+        <div class="card metric">
           <div class="label">Valeur du cabinet</div>
           <div class="value" id="dashCabinetValue">0,00 $</div>
           <div class="sub">Caisse + valeur du stock</div>
         </div>
-        <div class="card metric" data-rhodes-icon="◷">
+        <div class="card metric">
           <div class="label">Dépenses du mois</div>
           <div class="value" id="dashMonthExpenses">0,00 $</div>
           <div class="sub" id="dashMonthName">Mois en cours</div>
@@ -4188,12 +3811,7 @@ $('navigationSave').addEventListener('click',async()=>{
     document.querySelector(".brand h1").innerHTML=esc(state.settings.name).replace(/\sde\sRhodes/i,"<br>de Rhodes");
     document.querySelector(".brand p").textContent=state.settings.place;
   }
-  function syncRhodesProfileChip(){
-    const target=document.getElementById("rhodesProfileName");
-    const source=document.getElementById("userName");
-    if(target&&source)target.textContent=source.textContent||"Médecin";
-  }
-  function renderAll(){syncRhodesProfileChip();loadNavigation();renderDashboard();renderInventory();fillMovementResources();renderCraft();renderRecipes();fillRemoveIngredientSelect();renderSuppliers();renderHistory();renderSettings();}
+  function renderAll(){loadNavigation();renderDashboard();renderInventory();fillMovementResources();renderCraft();renderRecipes();fillRemoveIngredientSelect();renderSuppliers();renderHistory();renderSettings();}
 
 
 
