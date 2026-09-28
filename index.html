@@ -1100,6 +1100,170 @@
 #bookEditor .book-editor-identity textarea{min-height:100px}
 .book-editor-identity{margin:16px 0}
 .book-editor-identity summary{cursor:pointer;margin-bottom:12px}
+
+/* === RHODES — prototype HTML validé === */
+body{
+  background:
+    linear-gradient(rgba(22,13,8,.16),rgba(22,13,8,.16)),
+    repeating-linear-gradient(90deg,#342015 0 7px,#42271a 7px 14px,#2a190f 14px 21px);
+}
+.app{
+  width:min(1540px,calc(100vw - 32px));
+  margin:16px auto;
+  border:2px solid #6c4b2c;
+  background:#25170f;
+  display:grid;
+  grid-template-columns:286px 1fr;
+  box-shadow:0 22px 60px #0008;
+  min-height:calc(100vh - 32px);
+}
+.sidebar{
+  padding:18px 16px 20px;
+  background:linear-gradient(#14271e,#0b1812);
+  border-right:1px solid #8c6b38;
+  color:#eee4cf;
+}
+.brand{
+  display:flex;gap:12px;align-items:center;
+  padding:4px 4px 16px;border-bottom:1px solid #72582f;margin-bottom:12px;
+}
+.brand .seal{width:58px;height:58px;flex:0 0 58px;margin:0;font-size:30px}
+.brand h1{margin:0;font-size:18px;line-height:1.02;letter-spacing:.4px}
+.brand p{display:block;margin-top:5px;color:#bfa97c;letter-spacing:1.5px;font-size:9px}
+.nav button{
+  width:100%;position:relative;border:1px solid transparent;background:transparent;
+  color:#eee4cf;text-align:left;padding:11px 10px 11px 43px;margin:2px 0;
+  font-size:14px;border-radius:2px;
+}
+.nav .ico{position:absolute;left:13px;color:#e0bc72}
+.nav button.active{
+  background:linear-gradient(90deg,#8b6c3830,#344a393a);
+  border-color:#816839;border-left:4px solid #d2b16b;color:#fff2d2;box-shadow:none;
+}
+.nav button:hover{background:#b08d3c16}
+.private-nav{border-top:1px solid #6c552f!important}
+.private-nav-title{color:#c7a965!important}
+.telegram{
+  margin-top:14px;border:1px solid #72582f;background:#0d1812;padding:0;
+  color:#2d2116;box-shadow:none;
+}
+.telegram small,.telegram strong{
+  background:linear-gradient(#f0e4c8,#d9c6a0);
+  border:1px solid #9a753e;color:#3a281a;padding:5px 8px;
+}
+.user-box{margin-top:6px;border:1px solid #72582f;background:#0d1812;color:#eee4cf}
+main{
+  padding:12px 14px 22px;
+  background:linear-gradient(#eee0c1,#e5d2aa);
+  min-width:0;
+}
+.topbar{
+  min-height:68px;border:1px solid #94723b;
+  background:linear-gradient(90deg,#172920,#22382c 64%,#172b21);
+  color:#efe2c4;display:grid;grid-template-columns:1fr auto auto;
+  align-items:center;gap:18px;padding:10px 18px;margin-bottom:0;
+  box-shadow:0 4px 10px #0002;
+}
+.topbar h2{margin:0;font-size:29px;letter-spacing:.5px;color:#efe2c4}
+.topbar p{margin:2px 0 0;color:#baa77e;font-size:10px;letter-spacing:1px}
+.topbar-bureau-shortcut{
+  background:linear-gradient(#7f1727,#61131e);color:#f4e7c9;
+  border:1px solid #b18a46;padding:10px 28px;font-weight:bold;letter-spacing:.4px;
+}
+.date-badge{text-align:right;font-size:10px;color:#c7b590}
+.date-badge strong{display:block;font-size:16px;color:#f0e3c4}
+.rhodes-real-hero{
+  position:relative;overflow:hidden;min-height:174px;margin-top:10px;
+  border:1px solid #9a7840;
+  background:
+    linear-gradient(90deg,#f2e4c6 0 40%,#efe0beaa 45%,#27382a33 72%),
+    linear-gradient(155deg,transparent 0 49%,#6d756b 50% 55%,transparent 56%),
+    linear-gradient(205deg,transparent 0 45%,#8d9387 46% 52%,transparent 53%),
+    linear-gradient(#a0a99d 0 34%,#6f786b 35% 47%,#465449 48% 66%,#293c2f 67% 100%);
+  display:flex;align-items:center;justify-content:space-between;padding:26px 28px;
+}
+.rhodes-real-hero:after{
+  content:"";position:absolute;left:42%;right:0;bottom:0;height:45%;
+  background:repeating-linear-gradient(90deg,#183322 0 4px,transparent 4px 18px),linear-gradient(#2a3f31,#192b20);
+  clip-path:polygon(0 72%,6% 38%,11% 73%,17% 24%,22% 70%,28% 35%,34% 67%,41% 18%,48% 72%,55% 31%,62% 68%,69% 20%,76% 70%,83% 28%,90% 64%,96% 20%,100% 56%,100% 100%,0 100%);
+}
+.rhodes-real-hero-copy{position:relative;z-index:2}
+.rhodes-real-hero-copy span{color:#9c6b28;font-size:17px}
+.rhodes-real-hero h3{margin:2px 0 4px;font-size:40px;line-height:1;color:#281b11}
+.rhodes-real-hero p{margin:0;color:#513b28;font-size:14px}
+.rhodes-real-hero blockquote{
+  position:relative;z-index:2;width:31%;
+  background:#efe0bded;border:1px solid #7d5d36;padding:17px;
+  color:#5d4835;font-style:italic;line-height:1.5;box-shadow:0 5px 12px #0002;
+}
+#dashboard .grid.cards{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px;
+}
+#dashboard .metric{
+  position:relative;min-height:108px;border:1px solid #b09358;
+  background:linear-gradient(#f5e9cf,#ead7b3);
+  padding:15px 10px 12px 65px;box-shadow:0 3px 8px #0001;
+}
+#dashboard .metric:first-child{background:linear-gradient(#482c1f,#2d1c14);color:#f1dfbb}
+#dashboard .metric:after{
+  content:attr(data-rh-icon);position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid #b08d3c;background:#caa85b22;color:#6a4b24;font-size:19px;
+}
+#dashboard .metric:first-child:after{color:#ead7a5}
+#dashboard .metric .label{font-size:10px;color:#5d4d38}
+#dashboard .metric:first-child .label{color:#cfbd9a}
+#dashboard .metric .value{font-size:25px;font-weight:bold;margin-top:7px;color:#4b341c}
+#dashboard .metric:first-child .value{color:#f5e6c4}
+#dashboard .metric .sub{font-size:9px;color:#786950;margin-top:3px}
+#dashboard .metric:first-child .sub{color:#cdbc98}
+#dashboard .dashboard-three{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px;
+}
+#dashboard .dashboard-three .card{
+  border:1px solid #ad8c56;background:linear-gradient(#f5e9cf,#ead7b3);
+  box-shadow:0 3px 8px #0001;min-height:276px;
+}
+#dashboard .section-title{
+  margin:0;background:linear-gradient(90deg,#4a2d1f,#5b3926)!important;
+  color:#f0dfbd!important;padding:10px 13px!important;
+  border-bottom:1px solid #98723c!important;font-size:15px!important;letter-spacing:.4px;
+}
+#dashboard .section-title small{font-size:9px!important;color:#cab184!important;font-weight:normal}
+#dashboard .card-body{color:#2d2116}
+#dashboard .pill{border:1px solid #9a6f3c;border-radius:999px;background:#2d1d14;color:#f0d7a4}
+#dashboard th{background:#543522!important;color:#f0dfbd!important;border-color:#927240!important}
+#dashboard td{background:#f7edd7!important;color:#2d2116!important;border-color:#bba57c!important}
+#dashboard input,#dashboard select,#dashboard textarea{
+  background:#fbf0d8;color:#2d2116;border-color:#bd9e66;
+}
+#dashboard .btn{
+  background:linear-gradient(#7d1727,#61131e);color:#f3e4c4;border:1px solid #a67f42;
+}
+#dashboard .btn.good{background:#173a2a}
+#dashboard .btn.secondary{background:#5e432e}
+#dashboard .btn.ghost{background:transparent;color:#59432d}
+.rhodes-real-lower{
+  display:grid;grid-template-columns:1.25fr .9fr;gap:8px;margin-top:8px;align-items:start;
+}
+.rhodes-real-lower > .card{
+  border:1px solid #ad8c56!important;background:linear-gradient(#f5e9cf,#ead7b3)!important;
+  margin-top:0!important;box-shadow:0 3px 8px #0001!important;
+}
+.rhodes-real-lower .pricing-card .table-wrap{overflow:visible}
+.rhodes-real-lower #ordersCard .orders-form{
+  grid-template-columns:1fr 1fr!important;gap:8px!important;
+}
+.rhodes-real-lower #ordersCard .order-add-wrap{grid-column:1/-1}
+.rhodes-real-lower #ordersCard .table-wrap{max-height:300px;overflow:auto}
+.rhodes-real-lower #ordersCard .orders-table{min-width:900px}
+@media(max-width:1200px){
+  .app{width:100%;margin:0;grid-template-columns:250px 1fr}
+  #dashboard .grid.cards{grid-template-columns:repeat(2,1fr)}
+  #dashboard .dashboard-three,.rhodes-real-lower{grid-template-columns:1fr}
+  .rhodes-real-hero blockquote{display:none}
+  .rhodes-real-hero-copy{max-width:90%}
+}
 </style>
 </head>
 <body class="locked" data-site-version="2026-09-21-1806">
@@ -1194,28 +1358,36 @@
     </header>
 
     <section id="dashboard" class="view active">
+      <div class="rhodes-real-hero">
+        <div class="rhodes-real-hero-copy">
+          <span>Bienvenue au</span>
+          <h3>Cabinet Médical de Rhodes</h3>
+          <p>Soins, remèdes et espoir pour les habitants du New Hanover.</p>
+        </div>
+        <blockquote>« Parce qu’une communauté en bonne santé est une communauté plus forte. »</blockquote>
+      </div>
       <div class="grid cards">
-        <div class="card metric accent">
+        <div class="card metric accent" data-rh-icon="◉">
           <div class="label">Montant de la caisse</div>
           <div class="value" id="dashCash">0,00 $</div>
           <div class="sub">Argent disponible</div>
         </div>
-        <div class="card metric">
+        <div class="card metric" data-rh-icon="▣">
           <div class="label">Valeur du stock</div>
           <div class="value" id="dashStockValue">0,00 $</div>
           <div class="sub">Selon les prix unitaires actuels</div>
         </div>
-        <div class="card metric">
+        <div class="card metric" data-rh-icon="⚕">
           <div class="label">Valeur pharmacie</div>
           <div class="value" id="dashPharmacyValue">0,00 $</div>
           <div class="sub">Valeur de vente du stock en pharmacie</div>
         </div>
-        <div class="card metric">
+        <div class="card metric" data-rh-icon="⌂">
           <div class="label">Valeur du cabinet</div>
           <div class="value" id="dashCabinetValue">0,00 $</div>
           <div class="sub">Caisse + valeur du stock</div>
         </div>
-        <div class="card metric">
+        <div class="card metric" data-rh-icon="◷">
           <div class="label">Dépenses du mois</div>
           <div class="value" id="dashMonthExpenses">0,00 $</div>
           <div class="sub" id="dashMonthName">Mois en cours</div>
@@ -1266,6 +1438,10 @@
           </div>
         </div>
 
+      </div>
+
+
+      <div class="rhodes-real-lower">
         <div class="card pricing-card">
           <h3 class="section-title">Prix de vente des recettes <small>modifiables uniquement par l’administrateur</small></h3>
           <div class="card-body">
@@ -1287,7 +1463,6 @@
             <p class="hint">Le « prix conseillé » correspond au tarif de la prestation facturée au patient. Kit de soin et Seringue vivifiante restent affichés mais ne sont pas vendus à la pharmacie.</p>
           </div>
         </div>
-      </div>
 
       <div class="card" id="ordersCard" style="margin-top:18px">
         <h3 class="section-title">Commandes d'ingrédients <small>le stock et la comptabilité ne sont modifiés qu'au passage en « Livré »</small></h3>
@@ -1359,6 +1534,9 @@
           </div>
           <p class="hint">Une commande « À commander » attend encore sa prise en charge. La date et l’heure de livraison sont facultatives et peuvent être ajoutées ou modifiées tant que la commande n’est pas livrée. Le stock et la caisse ne sont modifiés qu’au passage en « Livré ».</p>
         </div>
+      </div>
+
+
       </div>
 
       <div class="card" style="margin-top:18px">
