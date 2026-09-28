@@ -1299,6 +1299,158 @@ main{
   .rhodes-reference-hero-copy{max-width:100%}.rhodes-reference-hero blockquote{display:none}
   #dashboard .grid.cards,#dashboard .dashboard-three{grid-template-columns:1fr}
 }
+
+/* === RHODES V2 — correction de fidélité visuelle === */
+html,body{width:100%;max-width:none}
+body{overflow-x:hidden}
+.rhodes-reference-masthead{
+  width:100%!important;
+  max-width:none!important;
+  height:160px!important;
+  margin:0!important;
+  border-left:0!important;border-right:0!important;
+  border-top:0!important;
+  border-bottom:8px solid #2b190f!important;
+  padding-left:78px!important;padding-right:52px!important;
+}
+.app{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  border-left:0!important;border-right:0!important;border-bottom:0!important;
+  grid-template-columns:292px minmax(0,1fr)!important;
+}
+.sidebar{
+  padding:20px 22px 26px!important;
+  background:
+    linear-gradient(rgba(17,31,24,.985),rgba(11,22,17,.995)),
+    radial-gradient(circle at 50% 100%,rgba(68,86,63,.18),transparent 42%)!important;
+}
+.brand{
+  display:flex!important;align-items:center!important;text-align:left!important;gap:14px!important;
+  margin:0 0 16px!important;padding:0 0 16px!important;
+}
+.brand .seal{margin:0!important;width:66px!important;height:66px!important;flex:0 0 66px!important}
+.brand h1{font-size:20px!important}
+.brand p{font-size:10px!important;letter-spacing:1.8px!important}
+.nav button{font-size:16px!important;min-height:50px!important;padding-left:48px!important}
+.nav .ico{left:15px!important;top:13px!important;font-size:19px!important}
+main{padding:14px 16px 34px!important}
+.topbar{
+  min-height:66px!important;
+  padding:10px 14px!important;
+  margin-bottom:10px!important;
+  display:grid!important;
+  grid-template-columns:minmax(360px,1fr) auto auto!important;
+  align-items:center!important;
+  gap:16px!important;
+  background:linear-gradient(90deg,#172d24,#203b2f 62%,#172f25)!important;
+}
+.rhodes-searchbar{
+  width:min(520px,100%);
+  height:42px;
+  display:flex;align-items:center;gap:11px;
+  padding:0 15px;
+  border:1px solid rgba(222,207,171,.26);
+  border-radius:4px;
+  background:rgba(255,255,255,.035);
+  color:#aeb7ab;
+  font-size:14px;
+}
+.rhodes-search-icon{font-size:24px;color:#d2b16b;line-height:1}
+.rhodes-hidden-title,.rhodes-hidden-subtitle,.rhodes-date-hidden{display:none!important}
+.topbar-bureau-shortcut{
+  position:static!important;transform:none!important;left:auto!important;top:auto!important;
+  min-width:190px!important;padding:10px 22px!important;
+}
+.rhodes-profile-chip{
+  display:flex;align-items:center;gap:10px;color:#eadfc7;white-space:nowrap
+}
+.rhodes-bell{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(210,177,107,.38);color:#d2b16b;font-size:16px
+}
+.rhodes-avatar{
+  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  background:#6b1f2d;border:2px solid #b08d3c;color:#ead8ab;font-size:20px
+}
+.rhodes-profile-text{display:flex;flex-direction:column;line-height:1.15}
+.rhodes-profile-text strong{font-size:14px;color:#f2e7cd}
+.rhodes-profile-text small{font-size:10px;color:#bba985}
+.rhodes-reference-hero{
+  min-height:180px!important;
+  margin-bottom:12px!important;
+  border-radius:3px!important;
+  background:
+    linear-gradient(90deg,rgba(6,18,13,.78) 0%,rgba(15,27,20,.30) 52%,rgba(25,37,28,.10) 100%),
+    radial-gradient(circle at 78% 19%,rgba(244,227,182,.30),transparent 15%),
+    linear-gradient(155deg,transparent 0 46%,#606d62 47% 53%,transparent 54%),
+    linear-gradient(208deg,transparent 0 42%,#7f887d 43% 49%,transparent 50%),
+    linear-gradient(#98a496 0 35%,#697467 36% 48%,#455448 49% 66%,#293c2f 67% 100%)!important;
+}
+.rhodes-reference-hero-copy h3{font-size:44px!important}
+.rhodes-reference-hero-copy p{font-size:16px!important}
+#dashboard .grid.cards{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+#dashboard .grid.cards .metric:nth-child(5){display:none!important}
+#dashboard .metric{min-height:128px!important;padding:18px 14px 15px 78px!important}
+#dashboard .metric:after{width:48px!important;height:48px!important;left:17px!important;font-size:22px!important}
+#dashboard .metric .label{font-size:13px!important}
+#dashboard .metric .value{font-size:29px!important}
+#dashboard .metric .sub{font-size:12px!important}
+#dashboard .dashboard-three{
+  grid-template-columns:1fr 1fr 1fr!important;
+  gap:10px!important;
+  margin-top:10px!important;
+}
+#dashboard .dashboard-three .stock-card{grid-column:2!important;grid-row:1!important}
+#dashboard .dashboard-three .movements-card{grid-column:1!important;grid-row:1!important}
+#dashboard .dashboard-three .smoke-card{grid-column:1 / -1!important;grid-row:2!important;margin-top:6px!important}
+#dashboard .dashboard-three .pricing-card{grid-column:1 / -1!important;grid-row:3!important;margin-top:6px!important}
+#dashboard .dashboard-three .movements-card,
+#dashboard .dashboard-three .stock-card{
+  min-height:260px!important;
+}
+#dashboard .dashboard-three:after{
+  content:"Consultations du jour\A\A09:00   John MacAllister\A11:00   Mary O’Leary\A14:30   Amos Reynolds\A17:00   Clara Whitmore";
+  white-space:pre-line;
+  grid-column:3;grid-row:1;
+  min-height:260px;
+  padding:58px 18px 18px;
+  background:
+    linear-gradient(rgba(244,233,209,.97),rgba(234,218,183,.97)),
+    repeating-linear-gradient(0deg,rgba(79,55,34,.025) 0 1px,transparent 1px 4px);
+  border:1px solid rgba(135,103,50,.42);
+  box-shadow:0 4px 11px rgba(0,0,0,.11);
+  color:#3e2d1c;
+  font-size:15px;
+  line-height:2.05;
+  position:relative;
+}
+#dashboard .dashboard-three:before{
+  content:"CONSULTATIONS DU JOUR";
+  grid-column:3;grid-row:1;
+  align-self:start;
+  z-index:2;
+  padding:12px 14px;
+  background:linear-gradient(90deg,#4e3728,#5b4030);
+  border-bottom:1px solid #886b3c;
+  color:#f1e3c4;font-size:16px;font-weight:700;
+}
+#ordersCard{margin-top:10px!important}
+@media(max-width:1200px){
+  .rhodes-reference-masthead{padding-left:28px!important}
+  .rhodes-sign-copy strong{font-size:30px!important}.rhodes-sign-copy span{font-size:22px!important}
+  .rhodes-town-sign{display:none!important}
+  .app{grid-template-columns:250px minmax(0,1fr)!important}
+  #dashboard .grid.cards{grid-template-columns:repeat(2,1fr)!important}
+  #dashboard .dashboard-three{grid-template-columns:1fr 1fr!important}
+  #dashboard .dashboard-three .movements-card,#dashboard .dashboard-three .stock-card,
+  #dashboard .dashboard-three .smoke-card,#dashboard .dashboard-three .pricing-card{grid-column:auto!important;grid-row:auto!important}
+  #dashboard .dashboard-three:before,#dashboard .dashboard-three:after{display:none!important}
+}
 </style>
 </head>
 <body class="locked" data-site-version="2026-09-21-1806">
@@ -1395,12 +1547,16 @@ main{
 
   <main>
     <header class="topbar">
-      <div>
-        <h2 id="pageTitle">Tableau de bord</h2>
-        <p>Registre du cabinet · gestion du stock et des dépenses</p>
-      </div>
+      <div class="rhodes-searchbar" aria-hidden="true"><span class="rhodes-search-icon">⌕</span><span>Rechercher un patient, un objet, une consultation...</span></div>
+      <h2 id="pageTitle" class="rhodes-hidden-title">Tableau de bord</h2>
+      <p class="rhodes-hidden-subtitle">Registre du cabinet · gestion du stock et des dépenses</p>
       <button class="topbar-bureau-shortcut" type="button" data-goto="bureau"><span>✉</span> LE BUREAU</button>
-      <div class="date-badge">
+      <div class="rhodes-profile-chip">
+        <span class="rhodes-bell">♧</span>
+        <span class="rhodes-avatar">⚕</span>
+        <span class="rhodes-profile-text"><strong id="rhodesProfileName">Médecin</strong><small>Cabinet de Rhodes</small></span>
+      </div>
+      <div class="date-badge rhodes-date-hidden">
         Registre ouvert le
         <strong id="todayLabel">—</strong>
       </div>
@@ -4032,7 +4188,12 @@ $('navigationSave').addEventListener('click',async()=>{
     document.querySelector(".brand h1").innerHTML=esc(state.settings.name).replace(/\sde\sRhodes/i,"<br>de Rhodes");
     document.querySelector(".brand p").textContent=state.settings.place;
   }
-  function renderAll(){loadNavigation();renderDashboard();renderInventory();fillMovementResources();renderCraft();renderRecipes();fillRemoveIngredientSelect();renderSuppliers();renderHistory();renderSettings();}
+  function syncRhodesProfileChip(){
+    const target=document.getElementById("rhodesProfileName");
+    const source=document.getElementById("userName");
+    if(target&&source)target.textContent=source.textContent||"Médecin";
+  }
+  function renderAll(){syncRhodesProfileChip();loadNavigation();renderDashboard();renderInventory();fillMovementResources();renderCraft();renderRecipes();fillRemoveIngredientSelect();renderSuppliers();renderHistory();renderSettings();}
 
 
 
