@@ -131,3 +131,9 @@ body{background-image:linear-gradient(#07040255,#07040255),var(--rh-wood)}
 .section-title>.rh-reference-icon{width:30px;height:32px;margin-right:4px}
 #saveRecipePricing .rh-reference-icon{width:20px;height:23px;margin-right:8px}
 .topbar-bureau-shortcut .rh-reference-icon{width:22px;height:20px}
+
+/* Tableau de bord — boutons verts plus lisibles */
+#dashboard .orders-form .order-add-wrap .btn.good,
+#dashboard .quick-actions .btn.good{
+  color:#cfe8c8 !important;
+}
