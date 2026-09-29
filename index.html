@@ -334,7 +334,13 @@
       .section-title{background:white!important;color:black!important}
     }
   
-    body.locked .app{filter:blur(2px);pointer-events:none;user-select:none}
+    body.locked .app{pointer-events:none;user-select:none}
+    .startup-status{display:none}
+    body.locked:has(#authGate.hidden):has(#accessGate.hidden) .startup-status{
+      display:block;position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+      z-index:9998;padding:10px 18px;border:1px solid #c79c54;border-radius:4px;
+      background:#071714;color:#faf0e6;font:15px Georgia,serif;box-shadow:0 4px 16px #0007;
+    }
     .auth-gate{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:22px;background:radial-gradient(circle at 50% 20%,rgba(112,43,25,.32),transparent 38%),rgba(7,5,4,.96)}
     .auth-gate.hidden{display:none}
     .auth-card{width:min(520px,100%);background:linear-gradient(180deg,#4a3125,#251a15);border:1px solid #c79c54;box-shadow:0 25px 80px #000;padding:30px;position:relative}
@@ -1196,24 +1202,24 @@ textarea::placeholder{
 <div class="app">
   <aside class="sidebar">
 <div class="brand">
-<div class="seal"><svg class="rh-reference-icon" viewBox="44 21 67 75" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></div>
+<div class="seal"><svg class="rh-reference-icon" viewBox="44 21 67 75" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-0"></use></svg></div>
 <div>
 <h1>Cabinet Médical<br/>de Rhodes</h1>
 <p>Rhodes · Lemoyne</p>
 </div>
 </div>
 <nav class="nav" id="nav">
-<button class="active" data-view="dashboard"><span class="ico"><svg class="rh-reference-icon" viewBox="49 132 32 29" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Tableau de bord</button>
+<button class="active" data-view="dashboard"><span class="ico"><svg class="rh-reference-icon" viewBox="49 132 32 29" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-1"></use></svg></span>Tableau de bord</button>
 <button data-view="bureau"><span class="ico">✉</span>LE BUREAU</button>
-<button data-view="consultations"><span class="ico"><svg class="rh-reference-icon" viewBox="49 227 32 30" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Carnet de consultations</button>
-<button data-view="westlegacy"><span class="ico"><svg class="rh-reference-icon" viewBox="49 278 32 32" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Panel WestLegacy</button>
-<button data-view="inventory"><span class="ico"><svg class="rh-reference-icon" viewBox="49 328 32 33" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Inventaire</button>
-<button data-view="pharmacy"><span class="ico"><svg class="rh-reference-icon" viewBox="49 378 32 33" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Pharmacie</button>
-<button data-view="movements"><span class="ico"><svg class="rh-reference-icon" viewBox="49 428 32 32" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Entrées / sorties</button>
-<button data-view="debts"><span class="ico"><svg class="rh-reference-icon" viewBox="49 479 32 32" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Ardoise des impayés</button>
-<button data-view="craft"><span class="ico"><svg class="rh-reference-icon" viewBox="49 531 32 31" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Fabrication</button>
-<button data-view="suppliers"><span class="ico"><svg class="rh-reference-icon" viewBox="49 580 32 33" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Fournisseurs</button>
-<button data-view="history"><span class="ico"><svg class="rh-reference-icon" viewBox="49 632 32 32" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Historique</button>
+<button data-view="consultations"><span class="ico"><svg class="rh-reference-icon" viewBox="49 227 32 30" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-2"></use></svg></span>Carnet de consultations</button>
+<button data-view="westlegacy"><span class="ico"><svg class="rh-reference-icon" viewBox="49 278 32 32" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-3"></use></svg></span>Panel WestLegacy</button>
+<button data-view="inventory"><span class="ico"><svg class="rh-reference-icon" viewBox="49 328 32 33" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-4"></use></svg></span>Inventaire</button>
+<button data-view="pharmacy"><span class="ico"><svg class="rh-reference-icon" viewBox="49 378 32 33" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-5"></use></svg></span>Pharmacie</button>
+<button data-view="movements"><span class="ico"><svg class="rh-reference-icon" viewBox="49 428 32 32" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-6"></use></svg></span>Entrées / sorties</button>
+<button data-view="debts"><span class="ico"><svg class="rh-reference-icon" viewBox="49 479 32 32" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-7"></use></svg></span>Ardoise des impayés</button>
+<button data-view="craft"><span class="ico"><svg class="rh-reference-icon" viewBox="49 531 32 31" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-8"></use></svg></span>Fabrication</button>
+<button data-view="suppliers"><span class="ico"><svg class="rh-reference-icon" viewBox="49 580 32 33" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-9"></use></svg></span>Fournisseurs</button>
+<button data-view="history"><span class="ico"><svg class="rh-reference-icon" viewBox="49 632 32 32" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-10"></use></svg></span>Historique</button>
 </nav>
 <button class="btn secondary admin-only" id="organizeNavigation" type="button">↕ Organiser le menu</button>
 <div class="telegram">
@@ -1232,10 +1238,10 @@ textarea::placeholder{
 </div>
 <nav aria-label="Gestion du cabinet" class="nav private-nav" id="privateNav">
 <div class="private-nav-title user-manage-only">GESTION DU CABINET</div>
-<button class="book-supervisor-only" data-view="notebooksAdmin"><span class="ico"><svg class="rh-reference-icon" viewBox="49 701 32 34" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Carnets du personnel</button>
-<button class="admin-only" data-view="recipes"><span class="ico"><svg class="rh-reference-icon" viewBox="49 750 32 35" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Recettes</button>
-<button class="user-manage-only" data-view="users" id="usersNav"><span class="ico"><svg class="rh-reference-icon" viewBox="49 801 34 35" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Apprentis</button>
-<button class="admin-only" data-view="settings" id="settingsNav"><span class="ico"><svg class="rh-reference-icon" viewBox="49 851 32 34" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>Paramètres</button>
+<button class="book-supervisor-only" data-view="notebooksAdmin"><span class="ico"><svg class="rh-reference-icon" viewBox="49 701 32 34" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-11"></use></svg></span>Carnets du personnel</button>
+<button class="admin-only" data-view="recipes"><span class="ico"><svg class="rh-reference-icon" viewBox="49 750 32 35" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-12"></use></svg></span>Recettes</button>
+<button class="user-manage-only" data-view="users" id="usersNav"><span class="ico"><svg class="rh-reference-icon" viewBox="49 801 34 35" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-13"></use></svg></span>Apprentis</button>
+<button class="admin-only" data-view="settings" id="settingsNav"><span class="ico"><svg class="rh-reference-icon" viewBox="49 851 32 34" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-14"></use></svg></span>Paramètres</button>
 </nav>
 </aside>
 <main>
@@ -1244,7 +1250,7 @@ textarea::placeholder{
 <h2 id="pageTitle">Tableau de bord</h2>
 <p>Registre du cabinet · gestion du stock et des dépenses</p>
 </div>
-<button class="topbar-bureau-shortcut" data-goto="bureau" type="button"><svg class="rh-reference-icon" viewBox="830 37 22 20" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg> LE BUREAU</button>
+<button class="topbar-bureau-shortcut" data-goto="bureau" type="button"><svg class="rh-reference-icon" viewBox="830 37 22 20" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-15"></use></svg> LE BUREAU</button>
 <div class="date-badge">
         Registre ouvert le
         <strong id="todayLabel">—</strong>
@@ -1252,27 +1258,27 @@ textarea::placeholder{
 </header>
 <section class="view active" id="dashboard"><div aria-label="Rue de Rhodes, Lemoyne, illustration du cabinet médical" class="rh-hero" role="img"><div class="rh-hero-copy"><p>Bienvenue au</p><h2>Cabinet Médical de Rhodes</h2><p class="rh-tagline">Soins, remèdes et espoir pour les habitants de Lemoyne.</p></div><blockquote>« Parce qu’une communauté en bonne santé est une communauté plus forte. »</blockquote></div>
 <div class="grid cards">
-<div class="card metric accent"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="369 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>
+<div class="card metric accent"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="369 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-16"></use></svg></span>
 <div class="label">Montant de la caisse</div>
 <div class="value" id="dashCash">0,00 $</div>
 <div class="sub">Argent disponible</div>
 </div>
-<div class="card metric"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="588 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>
+<div class="card metric"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="588 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-17"></use></svg></span>
 <div class="label">Valeur du stock</div>
 <div class="value" id="dashStockValue">0,00 $</div>
 <div class="sub">Selon les prix unitaires actuels</div>
 </div>
-<div class="card metric"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="801 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>
+<div class="card metric"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="801 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-18"></use></svg></span>
 <div class="label">Valeur pharmacie</div>
 <div class="value" id="dashPharmacyValue">0,00 $</div>
 <div class="sub">Valeur de vente du stock en pharmacie</div>
 </div>
-<div class="card metric"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="1013 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>
+<div class="card metric"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="1013 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-19"></use></svg></span>
 <div class="label">Valeur du cabinet</div>
 <div class="value" id="dashCabinetValue">0,00 $</div>
 <div class="sub">Caisse + valeur du stock</div>
 </div>
-<div class="card metric"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="1225 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg></span>
+<div class="card metric"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="1225 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-20"></use></svg></span>
 <div class="label">Dépenses du mois</div>
 <div class="value" id="dashMonthExpenses">0,00 $</div>
 <div class="sub" id="dashMonthName">Mois en cours</div>
@@ -1280,15 +1286,15 @@ textarea::placeholder{
 </div>
 <div class="dashboard-three">
 <div class="card stock-card">
-<h3 class="section-title"><svg class="rh-reference-icon" viewBox="375 423 33 34" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg><span class="rh-heading-text">État rapide du stock <small>ressources les plus basses</small></span></h3>
+<h3 class="section-title"><svg class="rh-reference-icon" viewBox="375 423 33 34" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-21"></use></svg><span class="rh-heading-text">État rapide du stock <small>ressources les plus basses</small></span></h3>
 <div class="card-body" id="lowStockPanel"></div>
 </div>
 <div class="card movements-card">
-<h3 class="section-title"><svg class="rh-reference-icon" viewBox="733 424 32 33" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg><span class="rh-heading-text">Derniers mouvements</span></h3>
+<h3 class="section-title"><svg class="rh-reference-icon" viewBox="733 424 32 33" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-22"></use></svg><span class="rh-heading-text">Derniers mouvements</span></h3>
 <div class="card-body" id="recentPanel"></div>
 </div>
 <div class="card smoke-card">
-<h3 class="section-title"><svg class="rh-reference-icon" viewBox="1088 423 30 36" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg><span class="rh-heading-text">Code des fumigènes <small>signification opérationnelle</small></span></h3>
+<h3 class="section-title"><svg class="rh-reference-icon" viewBox="1088 423 30 36" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-23"></use></svg><span class="rh-heading-text">Code des fumigènes <small>signification opérationnelle</small></span></h3>
 <div class="card-body">
 <table class="smoke-table">
 <thead>
@@ -1321,7 +1327,7 @@ textarea::placeholder{
 </div>
 
 </div><div class="rh-dashboard-bottom"><div class="card pricing-card">
-<h3 class="section-title"><svg class="rh-reference-icon" viewBox="374 748 34 34" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg><span class="rh-heading-text">Prix de vente des recettes <small>modifiables uniquement par l’administrateur</small></span></h3>
+<h3 class="section-title"><svg class="rh-reference-icon" viewBox="374 748 34 34" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-24"></use></svg><span class="rh-heading-text">Prix de vente des recettes <small>modifiables uniquement par l’administrateur</small></span></h3>
 <div class="card-body">
 <div class="table-wrap">
 <table class="pricing-table">
@@ -1336,13 +1342,13 @@ textarea::placeholder{
 </table>
 </div>
 <div class="form-actions admin-only">
-<button class="btn" id="saveRecipePricing" type="button"><svg class="rh-reference-icon" viewBox="397 1006 25 28" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg>Enregistrer les prix</button>
+<button class="btn" id="saveRecipePricing" type="button"><svg class="rh-reference-icon" viewBox="397 1006 25 28" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-25"></use></svg>Enregistrer les prix</button>
 </div>
 <p class="hint">Le « prix conseillé » correspond au tarif de la prestation facturée au patient. Kit de soin et Seringue vivifiante restent affichés mais ne sont pas vendus à la pharmacie.</p>
 </div>
-</div><div class="card rh-orders-overview"><h3 class="section-title"><svg class="rh-reference-icon" viewBox="993 749 34 34" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg><span class="rh-heading-text">Commandes d’ingrédients<small>le stock et la comptabilité ne sont modifiés qu’au passage en « Livré »</small></span></h3><div class="card-body"><table><thead><tr><th>Ingrédient</th><th>Stock</th><th>Quantité</th><th>Statut</th></tr></thead><tbody id="rhOrderOverview"></tbody></table><button class="rh-order-link" onclick="document.getElementById('ordersCard').scrollIntoView({behavior:'smooth',block:'start'})" type="button">Gérer les commandes ↓</button></div></div></div>
+</div><div class="card rh-orders-overview"><h3 class="section-title"><svg class="rh-reference-icon" viewBox="993 749 34 34" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-26"></use></svg><span class="rh-heading-text">Commandes d’ingrédients<small>le stock et la comptabilité ne sont modifiés qu’au passage en « Livré »</small></span></h3><div class="card-body"><table><thead><tr><th>Ingrédient</th><th>Stock</th><th>Quantité</th><th>Statut</th></tr></thead><tbody id="rhOrderOverview"></tbody></table><button class="rh-order-link" onclick="document.getElementById('ordersCard').scrollIntoView({behavior:'smooth',block:'start'})" type="button">Gérer les commandes ↓</button></div></div></div>
 <div class="card" id="ordersCard" style="margin-top:18px">
-<h3 class="section-title"><svg class="rh-reference-icon" viewBox="993 749 34 34" aria-hidden="true" focusable="false"><use href="rhodes-reference-icons.svg#artwork"></use></svg><span class="rh-heading-text">Commandes d'ingrédients <small>le stock et la comptabilité ne sont modifiés qu'au passage en « Livré »</small></span></h3>
+<h3 class="section-title"><svg class="rh-reference-icon" viewBox="993 749 34 34" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-26"></use></svg><span class="rh-heading-text">Commandes d'ingrédients <small>le stock et la comptabilité ne sont modifiés qu'au passage en « Livré »</small></span></h3>
 <div class="card-body">
 <form class="orders-form" id="newOrderForm">
 <div class="field">
@@ -5124,5 +5130,6 @@ $('navigationSave').addEventListener('click',async()=>{
 })();
 
 </script>
+<div class="startup-status" role="status" aria-live="polite">Chargement du cabinet…</div>
 </body>
 </html>
