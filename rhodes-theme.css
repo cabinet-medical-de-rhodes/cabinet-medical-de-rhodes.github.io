@@ -121,3 +121,13 @@ body{background-image:linear-gradient(#07040255,#07040255),var(--rh-wood)}
 
 /* Pharmacie — bouton Actualiser lisible */
 #refreshPharmacy{color:linen !important;}
+
+/* Icônes originales : fenêtres SVG sur les pixels de la référence, aucun redessin. */
+.rh-reference-icon{display:inline-block;width:28px;height:28px;flex:none;vertical-align:middle;overflow:hidden;stroke:none;fill:none}
+.sidebar .nav .ico .rh-reference-icon{width:100%;height:100%}
+.sidebar .seal .rh-reference-icon{width:100%;height:100%}
+.rh-metric-icon,.metric.accent .rh-metric-icon{background:none;border:0;box-shadow:none}
+.rh-metric-icon .rh-reference-icon{width:100%;height:100%;border-radius:50%}
+.section-title>.rh-reference-icon{width:30px;height:32px;margin-right:4px}
+#saveRecipePricing .rh-reference-icon{width:20px;height:23px;margin-right:8px}
+.topbar-bureau-shortcut .rh-reference-icon{width:22px;height:20px}
