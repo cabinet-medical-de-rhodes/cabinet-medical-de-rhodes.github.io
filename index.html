@@ -2944,7 +2944,7 @@ $('navigationSave').addEventListener('click',async()=>{
   function renderRhodesOrderOverview(){
     const target=$("rhOrderOverview");if(!target)return;
     const orders=state.orders.filter(o=>o.status!=="livre").slice().sort((a,b)=>String(a.resourceName||"").localeCompare(String(b.resourceName||""),"fr")).slice(0,6);
-    target.innerHTML=orders.length?orders.map(o=>`<tr><td>${esc(o.resourceName)}</td><td>${num(res(o.resourceId)?.stock)}</td><td>${num(o.quantity)}</td><td><span class="rh-order-status ${o.status==="en_cours"?"pending":""}">${o.status==="en_cours"?"En cours":"À commander"}</span></td></tr>`).join(""):'<tr><td colspan="4" class="empty">Aucune commande en attente.</td></tr>';
+    target.innerHTML=orders.length?orders.map(o=>`<tr><td class="resource-name">${esc(String(o.resourceName||"").toLocaleUpperCase("fr-FR"))}</td><td>${num(res(o.resourceId)?.stock)}</td><td>${num(o.quantity)}</td><td><span class="rh-order-status ${o.status==="en_cours"?"pending":""}">${o.status==="en_cours"?"En cours":"À commander"}</span></td></tr>`).join(""):'<tr><td colspan="4" class="empty">Aucune commande en attente.</td></tr>';
   }
 
   function renderOrders(){
