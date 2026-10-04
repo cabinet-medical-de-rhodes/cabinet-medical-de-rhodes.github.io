@@ -1185,7 +1185,8 @@ textarea::placeholder{
 <style id="resource-names-uppercase">
 #newRecipeName,#newIngredientName,#supplierNewResourceName,.recipe-name{text-transform:uppercase}
 </style>
-<link rel="stylesheet" href="medicine-guide.css">\n</head>
+<link rel="stylesheet" href="medicine-guide.css">
+</head>
 <body class="locked" data-site-version="2026-09-21-1806">
 
 <div class="auth-gate hidden" id="authGate">
@@ -1227,7 +1228,8 @@ textarea::placeholder{
 <nav class="nav" id="nav">
 <button class="active" data-view="dashboard"><span class="ico"><svg class="rh-reference-icon" viewBox="49 132 32 29" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-1"></use></svg></span>Tableau de bord</button>
 <button data-view="bureau"><span class="ico">✉</span>LE BUREAU</button>
-<button data-view="consultations"><span class="ico"><svg class="rh-reference-icon" viewBox="49 227 32 30" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-2"></use></svg></span>Carnet de consultations</button>\n<button data-view="medicineGuide"><span class="ico">✚</span>Guide de la médecine</button>
+<button data-view="consultations"><span class="ico"><svg class="rh-reference-icon" viewBox="49 227 32 30" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-2"></use></svg></span>Carnet de consultations</button>
+<button data-view="medicineGuide"><span class="ico">✚</span>Guide de la médecine</button>
 <button data-view="westlegacy"><span class="ico"><svg class="rh-reference-icon" viewBox="49 278 32 32" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-3"></use></svg></span>Panel WestLegacy</button>
 <button data-view="inventory"><span class="ico"><svg class="rh-reference-icon" viewBox="49 328 32 33" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-4"></use></svg></span>Inventaire</button>
 <button data-view="pharmacy"><span class="ico"><svg class="rh-reference-icon" viewBox="49 378 32 33" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-5"></use></svg></span>Pharmacie</button>
@@ -1914,7 +1916,8 @@ textarea::placeholder{
       </div>
     </div>
   </div>
-</section>\n<section id="consultations" class="view">
+</section>
+<section id="consultations" class="view">
  <div class="book-toolbar"><button id="bookHome" class="btn">Couverture</button><button id="bookRefresh" class="btn secondary">Actualiser le carnet</button><button id="bookNew" class="btn" hidden>Ajouter un rapport</button><button id="bookCategoryEdit" class="btn" hidden>Gérer les intercalaires</button><span id="bookStatus" role="status"></span></div>
  <div class="book-layout">
   <aside class="book-directory" aria-label="Intercalaires"><label for="bookSearch">Rechercher dans le carnet</label><input id="bookSearch" type="search" placeholder="Blessure, zone, mot-clé…"><div id="bookIndex"></div></aside>
@@ -1980,7 +1983,8 @@ textarea::placeholder{
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>\n<script src="medicine-guide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="medicine-guide.js"></script>
 <script>
 (async function(){
   const SUPABASE_URL = "https://zuduxergikwysupesdep.supabase.co";
@@ -2877,7 +2881,9 @@ $('navigationSave').addEventListener('click',async()=>{
  }catch(e){dbError(e);}finally{navigationSaving=false;$('navigationSave').disabled=false;}
 });
 
-  const medicineGuide=window.RhodesMedicineGuide.init({db,$,toast,dbError,getCurrentUser:()=>currentUser,getCurrentProfile:()=>currentProfile});\n\n  function setView(id){
+  const medicineGuide=window.RhodesMedicineGuide.init({db,$,toast,dbError,getCurrentUser:()=>currentUser,getCurrentProfile:()=>currentProfile});
+
+  function setView(id){
     if(id==="recipes" && !isAdmin){
       toast("La catégorie Recettes est réservée à l’administrateur.");
       id="dashboard";
@@ -2890,7 +2896,8 @@ $('navigationSave').addEventListener('click',async()=>{
     document.querySelectorAll("#nav button,#privateNav button").forEach(b=>b.classList.toggle("active",b.dataset.view===id));
     const btn=document.querySelector(`#nav button[data-view="${id}"],#privateNav button[data-view="${id}"]`);
     $("pageTitle").textContent=btn?btn.textContent.trim():"Cabinet Médical";
-    if(id==="consultations")loadBook();\n    if(id==="medicineGuide")medicineGuide.load();
+    if(id==="consultations")loadBook();
+    if(id==="medicineGuide")medicineGuide.load();
     if(id==="notebooksAdmin" && isBookSupervisor())loadAdminNotebookUsers();
     if(id==="users" && (isAdmin||isAdjoint)) loadUsers();
     if(id==="pharmacy")loadPharmacy();
