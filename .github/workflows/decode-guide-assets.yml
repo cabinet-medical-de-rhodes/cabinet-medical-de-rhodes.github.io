@@ -1,0 +1,35 @@
+name: Decode Guide Assets
+on:
+  push:
+    branches: [medicine-guide-safe]
+    paths:
+      - '.github/workflows/decode-guide-assets.yml'
+permissions:
+  contents: write
+jobs:
+  decode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: medicine-guide-safe
+          fetch-depth: 0
+      - name: Reconstruire les images
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/guide-medecine
+          cat .guide-transfer/1.part*.b64 | base64 -d > assets/guide-medecine/1.webp
+          for n in $(seq 2 64); do
+            base64 -d ".guide-transfer/$n.b64" > "assets/guide-medecine/$n.webp"
+          done
+          test "$(find assets/guide-medecine -maxdepth 1 -type f | wc -l)" -eq 64
+          file assets/guide-medecine/1.webp | grep -q 'Web/P image'
+          file assets/guide-medecine/64.webp | grep -q 'Web/P image'
+          rm -rf .guide-transfer
+          rm -f .github/workflows/import-medicine-guide.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Reconstruit les 64 pages locales du Guide de la médecine"
+          git push
