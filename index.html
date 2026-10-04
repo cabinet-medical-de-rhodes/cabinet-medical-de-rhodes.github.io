@@ -1167,33 +1167,6 @@ textarea::placeholder{
   color:#392718;
 }
 
-
-/* Guide de la médecine */
-#medicineGuide .guide-shell{max-width:980px;margin:0 auto}
-#medicineGuide .guide-toolbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;justify-content:center;margin:0 0 16px}
-#medicineGuide .guide-book{display:grid;grid-template-columns:54px minmax(0,1fr) 54px;gap:14px;align-items:start}
-#medicineGuide .guide-page-wrap{min-width:0;perspective:1800px}
-#medicineGuide .guide-cover,#medicineGuide .guide-paper{width:min(100%,650px);min-height:860px;margin:auto;border:1px solid #9b7948;box-shadow:10px 18px 42px #0009;position:relative}
-#medicineGuide .guide-cover{display:flex;align-items:center;justify-content:center;text-align:center;padding:55px;background:radial-gradient(circle at 50% 25%,rgba(224,190,119,.17),transparent 34%),linear-gradient(145deg,#29160f,#5d2b1d 55%,#25140e);color:#f0d99d;border-radius:8px}
-#medicineGuide .guide-cover:before{content:"";position:absolute;inset:18px;border:2px solid #b98f49;box-shadow:inset 0 0 0 5px #2a170f}
-#medicineGuide .guide-cover-inner{position:relative;z-index:1}
-#medicineGuide .guide-cover small{display:block;letter-spacing:3px;text-transform:uppercase;font-size:14px}
-#medicineGuide .guide-cover h3{font-size:48px;line-height:1.05;margin:36px 0 16px;font-weight:normal}
-#medicineGuide .guide-cover em{font-size:22px;color:#d8b76d}
-#medicineGuide .guide-paper{background:radial-gradient(ellipse at 80% 8%,#fff8df99,transparent 55%),linear-gradient(90deg,#b08b58 0,#e2c89a 4%,#f1dfba 48%,#d9bb87 100%);color:#342317;padding:54px 62px;border-radius:3px 9px 9px 3px}
-#medicineGuide .guide-paper:before{content:"";position:absolute;inset:15px;border:1px solid #9b764777;pointer-events:none}
-#medicineGuide .guide-paper h3{position:relative;text-align:center;color:#642d20;font-size:29px;font-weight:normal;margin:5px 0 32px}
-#medicineGuide .guide-text{position:relative;white-space:pre-wrap;line-height:1.72;font-size:16px}
-#medicineGuide .guide-final{display:grid;place-items:center;text-align:center;min-height:720px;font-size:clamp(38px,6vw,78px);line-height:1.1;font-weight:bold;color:#6f1712;text-transform:uppercase}
-#medicineGuide .guide-arrow{position:sticky;top:45vh;margin-top:280px;width:54px;height:66px;border-radius:28px;border:1px solid #b58c4a;background:linear-gradient(110deg,#543921,#21150f 55%,#65482b);color:#e4c382;font-size:30px}
-#medicineGuide .guide-arrow:disabled{opacity:.28;cursor:default}
-#medicineGuide .guide-counter{text-align:center;color:#c8af81;margin-top:16px}
-#medicineGuide .guide-admin{display:none;margin-top:14px;padding:14px;border:1px solid rgba(199,156,84,.42);background:rgba(0,0,0,.12)}
-#medicineGuide .guide-admin.show{display:block}
-#medicineGuide .guide-admin-grid{display:grid;grid-template-columns:1fr;gap:10px}
-#medicineGuide .guide-admin textarea{min-height:220px}
-@media(max-width:700px){#medicineGuide .guide-book{grid-template-columns:34px minmax(0,1fr) 34px;gap:5px}#medicineGuide .guide-paper{min-height:620px;padding:35px 25px}#medicineGuide .guide-cover{min-height:620px;padding:28px}#medicineGuide .guide-cover h3{font-size:35px}#medicineGuide .guide-arrow{width:34px;height:52px;font-size:22px;margin-top:180px}}
-
 </style>
 <link rel="stylesheet" href="rhodes-theme.css?v=20260929-reference-icons">
 
@@ -1254,7 +1227,7 @@ textarea::placeholder{
 <nav class="nav" id="nav">
 <button class="active" data-view="dashboard"><span class="ico"><svg class="rh-reference-icon" viewBox="49 132 32 29" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-1"></use></svg></span>Tableau de bord</button>
 <button data-view="bureau"><span class="ico">✉</span>LE BUREAU</button>
-<button data-view="consultations"><span class="ico"><svg class="rh-reference-icon" viewBox="49 227 32 30" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-2"></use></svg></span>Carnet de consultations</button>\n<button data-view="medicineGuide"><span class="ico">✚</span>Guide de la médecine</button>
+<button data-view="consultations"><span class="ico"><svg class="rh-reference-icon" viewBox="49 227 32 30" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-2"></use></svg></span>Carnet de consultations</button>
 <button data-view="westlegacy"><span class="ico"><svg class="rh-reference-icon" viewBox="49 278 32 32" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-3"></use></svg></span>Panel WestLegacy</button>
 <button data-view="inventory"><span class="ico"><svg class="rh-reference-icon" viewBox="49 328 32 33" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-4"></use></svg></span>Inventaire</button>
 <button data-view="pharmacy"><span class="ico"><svg class="rh-reference-icon" viewBox="49 378 32 33" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-5"></use></svg></span>Pharmacie</button>
@@ -1912,36 +1885,6 @@ textarea::placeholder{
       </div>
     </section>
 
-
-
-<section id="medicineGuide" class="view">
-  <div class="guide-shell">
-    <div class="guide-toolbar">
-      <button id="guideHome" class="btn">Couverture</button>
-      <button id="guideRefresh" class="btn secondary">Actualiser</button>
-      <button id="guideToggleAdmin" class="btn" hidden>Gérer les pages</button>
-      <span id="guideStatus" class="muted"></span>
-    </div>
-    <div class="guide-book">
-      <button id="guidePrev" class="guide-arrow" type="button" aria-label="Page précédente">‹</button>
-      <div class="guide-page-wrap">
-        <div id="guideCover" class="guide-cover">
-          <div class="guide-cover-inner"><small>Cabinet Médical de Rhodes</small><h3>Guide de la médecine</h3><em>— 1889 —</em></div>
-        </div>
-        <article id="guidePaper" class="guide-paper" hidden><h3 id="guidePageTitle"></h3><div id="guidePageBody" class="guide-text"></div></article>
-      </div>
-      <button id="guideNext" class="guide-arrow" type="button" aria-label="Page suivante">›</button>
-    </div>
-    <div id="guideCounter" class="guide-counter"></div>
-    <div id="guideAdmin" class="guide-admin">
-      <div class="guide-admin-grid">
-        <div class="field"><label>Titre de la nouvelle page</label><input id="guideNewTitle" maxlength="160"></div>
-        <div class="field"><label>Contenu</label><textarea id="guideNewBody"></textarea></div>
-        <div class="form-actions"><button id="guideAddPage" class="btn good" type="button">Ajouter la page avant les remerciements</button><button id="guideDeletePage" class="btn danger" type="button">Supprimer la page affichée</button></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section id="consultations" class="view">
  <div class="book-toolbar"><button id="bookHome" class="btn">Couverture</button><button id="bookRefresh" class="btn secondary">Actualiser le carnet</button><button id="bookNew" class="btn" hidden>Ajouter un rapport</button><button id="bookCategoryEdit" class="btn" hidden>Gérer les intercalaires</button><span id="bookStatus" role="status"></span></div>
@@ -2919,7 +2862,7 @@ $('navigationSave').addEventListener('click',async()=>{
     document.querySelectorAll("#nav button,#privateNav button").forEach(b=>b.classList.toggle("active",b.dataset.view===id));
     const btn=document.querySelector(`#nav button[data-view="${id}"],#privateNav button[data-view="${id}"]`);
     $("pageTitle").textContent=btn?btn.textContent.trim():"Cabinet Médical";
-    if(id==="consultations")loadBook();\n    if(id==="medicineGuide")loadMedicineGuide();
+    if(id==="consultations")loadBook();
     if(id==="notebooksAdmin" && isBookSupervisor())loadAdminNotebookUsers();
     if(id==="users" && (isAdmin||isAdjoint)) loadUsers();
     if(id==="pharmacy")loadPharmacy();
@@ -5373,66 +5316,6 @@ $('navigationSave').addEventListener('click',async()=>{
 
   $("todayLabel").textContent=new Intl.DateTimeFormat("fr-FR",{day:"2-digit",month:"long",year:"numeric"}).format(new Date());
   $("mvDate").value=todayISO();
-
-  // Guide de la médecine
-  let medicineGuidePages=[],medicineGuidePage=-1,medicineGuideBusy=false;
-  const isCabinetChief=()=>!!currentUser && currentProfile?.access_status==="approved" && currentProfile?.medical_grade==="chef_de_cabinet";
-  async function loadMedicineGuide(){
-    if(medicineGuideBusy)return;
-    medicineGuideBusy=true;
-    $("guideStatus").textContent="Chargement…";
-    try{
-      const {data,error}=await db.from("medicine_guide_pages").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:true});
-      if(error)throw error;
-      medicineGuidePages=data||[];
-      medicineGuidePage=Math.min(medicineGuidePage,medicineGuidePages.length-1);
-      $("guideToggleAdmin").hidden=!isCabinetChief();
-      renderMedicineGuide();
-      $("guideStatus").textContent=medicineGuidePages.length+" pages";
-    }catch(e){$("guideStatus").textContent="Chargement impossible";dbError(e);}
-    finally{medicineGuideBusy=false;}
-  }
-  function renderMedicineGuide(){
-    const cover=medicineGuidePage<0;
-    $("guideCover").hidden=!cover;$("guidePaper").hidden=cover;
-    const page=cover?null:medicineGuidePages[medicineGuidePage];
-    if(page){
-      $("guidePageTitle").textContent=page.title||"Guide de la médecine";
-      $("guidePageBody").textContent=page.body||"";
-      $("guidePageBody").classList.toggle("guide-final",!!page.is_final);
-    }
-    $("guidePrev").disabled=medicineGuidePage<0;
-    $("guideNext").disabled=medicineGuidePage>=medicineGuidePages.length-1;
-    $("guideCounter").textContent=cover?"Couverture":("Page "+(medicineGuidePage+1)+" / "+medicineGuidePages.length);
-    $("guideDeletePage").disabled=!page||!!page.is_final||!isCabinetChief();
-  }
-  $("guideHome").addEventListener("click",()=>{medicineGuidePage=-1;renderMedicineGuide();});
-  $("guideRefresh").addEventListener("click",()=>loadMedicineGuide());
-  $("guidePrev").addEventListener("click",()=>{if(medicineGuidePage>=0){medicineGuidePage--;renderMedicineGuide();}});
-  $("guideNext").addEventListener("click",()=>{if(medicineGuidePage<medicineGuidePages.length-1){medicineGuidePage++;renderMedicineGuide();}});
-  $("guideToggleAdmin").addEventListener("click",()=>{if(isCabinetChief())$("guideAdmin").classList.toggle("show");});
-  $("guideAddPage").addEventListener("click",async()=>{
-    if(!isCabinetChief())return toast("Action réservée au Chef de cabinet.");
-    const title=$("guideNewTitle").value.trim(),body=$("guideNewBody").value.trim();
-    if(!title||!body)return toast("Renseigne le titre et le contenu.");
-    const finalPage=medicineGuidePages.find(p=>p.is_final);
-    const order=finalPage?finalPage.sort_order:medicineGuidePages.length+1;
-    const {error}=await db.from("medicine_guide_pages").insert({title,body,sort_order:order,is_final:false});
-    if(error)return dbError(error);
-    if(finalPage)await db.from("medicine_guide_pages").update({sort_order:order+1}).eq("id",finalPage.id);
-    $("guideNewTitle").value="";$("guideNewBody").value="";
-    await loadMedicineGuide();medicineGuidePage=Math.max(0,medicineGuidePages.length-2);renderMedicineGuide();toast("Page ajoutée.");
-  });
-  $("guideDeletePage").addEventListener("click",async()=>{
-    if(!isCabinetChief())return toast("Action réservée au Chef de cabinet.");
-    const page=medicineGuidePages[medicineGuidePage];
-    if(!page||page.is_final)return toast("Cette page ne peut pas être supprimée.");
-    if(!confirm("Supprimer cette page du Guide de la médecine ?"))return;
-    const {error}=await db.from("medicine_guide_pages").delete().eq("id",page.id);
-    if(error)return dbError(error);
-    medicineGuidePage=Math.max(-1,medicineGuidePage-1);await loadMedicineGuide();toast("Page supprimée.");
-  });
-
 })();
 
 </script>
