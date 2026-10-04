@@ -1,42 +1,46 @@
 (function(){
   function init(ctx){
     const {db,$,toast,dbError,getCurrentUser,getCurrentProfile}=ctx;
-    let pages=[],pageIndex=-1,busy=false;
+    let pages=[],pageIndex=0,busy=false;
     const isChief=()=>{
       const u=getCurrentUser(),p=getCurrentProfile();
       return !!u && p?.access_status==="approved" && p?.medical_grade==="chef_de_cabinet";
     };
     function preloadNext(){
       const next=pages[pageIndex+1];
-      if(next?.page_type==="image" && next.asset_path){
+      if(next?.image_path){
         const im=new Image();
-        im.src=next.asset_path;
+        im.src=next.image_path;
       }
     }
     function render(){
-      const cover=pageIndex<0;
-      const page=cover?null:pages[pageIndex];
-      $("guideCover").hidden=!cover;
-      $("guideImagePage").hidden=true;
-      $("guidePaper").hidden=true;
-
-      if(page){
-        if(page.page_type==="image" && page.asset_path){
-          $("guidePageImage").src=page.asset_path;
-          $("guidePageImage").alt=page.title||("Page "+(pageIndex+1));
-          $("guideImagePage").hidden=false;
-        }else{
-          $("guidePageTitle").textContent=page.is_final?"":(page.title||"Guide de la médecine");
-          $("guidePageBody").textContent=page.body||"";
-          $("guidePageBody").classList.toggle("guide-final",!!page.is_final);
-          $("guidePaper").hidden=false;
-        }
+      if(!pages.length){
+        $("guideImagePage").hidden=true;
+        $("guidePaper").hidden=false;
+        $("guidePageTitle").textContent="Guide de la médecine";
+        $("guidePageBody").textContent="Aucune page disponible.";
+        $("guideCounter").textContent="";
+        $("guidePrev").disabled=true;
+        $("guideNext").disabled=true;
+        return;
       }
-
-      $("guidePrev").disabled=pageIndex<0;
+      pageIndex=Math.max(0,Math.min(pageIndex,pages.length-1));
+      const page=pages[pageIndex];
+      const imageMode=!!page.image_path;
+      $("guideImagePage").hidden=!imageMode;
+      $("guidePaper").hidden=imageMode;
+      if(imageMode){
+        $("guidePageImage").src=page.image_path;
+        $("guidePageImage").alt=page.title||("Page "+(pageIndex+1));
+      }else{
+        $("guidePageTitle").textContent=page.is_final?"":(page.title||"Guide de la médecine");
+        $("guidePageBody").textContent=page.body||"";
+        $("guidePageBody").classList.toggle("guide-final",!!page.is_final);
+      }
+      $("guidePrev").disabled=pageIndex<=0;
       $("guideNext").disabled=pageIndex>=pages.length-1;
-      $("guideCounter").textContent=cover?"Couverture":("Page "+(pageIndex+1)+" / "+pages.length);
-      $("guideDeletePage").disabled=!page||!!page.is_final||!isChief();
+      $("guideCounter").textContent="Page "+(pageIndex+1)+" / "+pages.length;
+      $("guideDeletePage").disabled=!!page.is_final||!isChief();
       preloadNext();
     }
     async function load(){
@@ -47,7 +51,7 @@
         const {data,error}=await db.from("medicine_guide_pages").select("*").order("sort_order",{ascending:true}).order("created_at",{ascending:true});
         if(error)throw error;
         pages=data||[];
-        pageIndex=Math.min(pageIndex,pages.length-1);
+        if(pageIndex>=pages.length)pageIndex=Math.max(0,pages.length-1);
         $("guideToggleAdmin").hidden=!isChief();
         render();
         $("guideStatus").textContent=pages.length+" pages";
@@ -56,9 +60,9 @@
         dbError(e);
       }finally{busy=false;}
     }
-    $("guideHome").addEventListener("click",()=>{pageIndex=-1;render();});
+    $("guideHome").addEventListener("click",()=>{pageIndex=0;render();});
     $("guideRefresh").addEventListener("click",load);
-    $("guidePrev").addEventListener("click",()=>{if(pageIndex>=0){pageIndex--;render();}});
+    $("guidePrev").addEventListener("click",()=>{if(pageIndex>0){pageIndex--;render();}});
     $("guideNext").addEventListener("click",()=>{if(pageIndex<pages.length-1){pageIndex++;render();}});
     $("guideToggleAdmin").addEventListener("click",()=>{if(isChief())$("guideAdmin").classList.toggle("show");});
     $("guideAddPage").addEventListener("click",async()=>{
@@ -67,7 +71,7 @@
       if(!title||!body)return toast("Renseigne le titre et le contenu.");
       const finalPage=pages.find(p=>p.is_final);
       const order=finalPage?finalPage.sort_order:(pages.length+1);
-      const {error}=await db.from("medicine_guide_pages").insert({title,body,sort_order:order,is_final:false,page_type:"text",asset_path:null});
+      const {error}=await db.from("medicine_guide_pages").insert({title,body,sort_order:order,is_final:false,image_path:null});
       if(error)return dbError(error);
       if(finalPage){
         const move=await db.from("medicine_guide_pages").update({sort_order:order+1}).eq("id",finalPage.id);
@@ -87,10 +91,11 @@
       if(!confirm("Supprimer cette page du Guide de la médecine ?"))return;
       const {error}=await db.from("medicine_guide_pages").delete().eq("id",page.id);
       if(error)return dbError(error);
-      pageIndex=Math.max(-1,pageIndex-1);
+      pageIndex=Math.max(0,pageIndex-1);
       await load();
       toast("Page supprimée.");
     });
+    $("guidePageImage").addEventListener("error",()=>{$("guideStatus").textContent="Image introuvable";});
     render();
     return {load,render,isChief};
   }
