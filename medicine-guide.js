@@ -6,22 +6,38 @@
       const u=getCurrentUser(),p=getCurrentProfile();
       return !!u && p?.access_status==="approved" && p?.medical_grade==="chef_de_cabinet";
     };
+    function preloadNext(){
+      const next=pages[pageIndex+1];
+      if(next?.page_type==="image" && next.asset_path){
+        const im=new Image();
+        im.src=next.asset_path;
+      }
+    }
     function render(){
       const cover=pageIndex<0;
-      $("guideCover").hidden=!cover;
-      $("guidePaper").hidden=cover;
       const page=cover?null:pages[pageIndex];
+      $("guideCover").hidden=!cover;
+      $("guideImagePage").hidden=true;
+      $("guidePaper").hidden=true;
+
       if(page){
-        $("guidePageTitle").textContent=page.title||"Guide de la médecine";
-        $("guidePageBody").textContent=page.body||"";
-        $("guidePageBody").classList.toggle("guide-final",!!page.is_final);
-      }else{
-        $("guidePageBody").classList.remove("guide-final");
+        if(page.page_type==="image" && page.asset_path){
+          $("guidePageImage").src=page.asset_path;
+          $("guidePageImage").alt=page.title||("Page "+(pageIndex+1));
+          $("guideImagePage").hidden=false;
+        }else{
+          $("guidePageTitle").textContent=page.is_final?"":(page.title||"Guide de la médecine");
+          $("guidePageBody").textContent=page.body||"";
+          $("guidePageBody").classList.toggle("guide-final",!!page.is_final);
+          $("guidePaper").hidden=false;
+        }
       }
+
       $("guidePrev").disabled=pageIndex<0;
       $("guideNext").disabled=pageIndex>=pages.length-1;
       $("guideCounter").textContent=cover?"Couverture":("Page "+(pageIndex+1)+" / "+pages.length);
       $("guideDeletePage").disabled=!page||!!page.is_final||!isChief();
+      preloadNext();
     }
     async function load(){
       if(busy)return;
@@ -51,7 +67,7 @@
       if(!title||!body)return toast("Renseigne le titre et le contenu.");
       const finalPage=pages.find(p=>p.is_final);
       const order=finalPage?finalPage.sort_order:(pages.length+1);
-      const {error}=await db.from("medicine_guide_pages").insert({title,body,sort_order:order,is_final:false});
+      const {error}=await db.from("medicine_guide_pages").insert({title,body,sort_order:order,is_final:false,page_type:"text",asset_path:null});
       if(error)return dbError(error);
       if(finalPage){
         const move=await db.from("medicine_guide_pages").update({sort_order:order+1}).eq("id",finalPage.id);
