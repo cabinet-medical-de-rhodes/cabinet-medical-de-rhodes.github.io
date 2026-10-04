@@ -1280,9 +1280,9 @@ textarea::placeholder{
 <div class="sub">Argent disponible</div>
 </div>
 <div class="card metric"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="588 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-17"></use></svg></span>
-<div class="label">Valeur du stock</div>
-<div class="value" id="dashStockValue">0,00 $</div>
-<div class="sub">Selon les prix unitaires actuels</div>
+<div class="label">PROFITS DU CABINET</div>
+<div class="value" id="dashCabinetProfitWeek">0,00 $</div>
+<div class="sub">Ventes pharmacie − coût de fabrication · semaine en cours</div>
 </div>
 <div class="card metric"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="801 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-18"></use></svg></span>
 <div class="label">Valeur pharmacie</div>
@@ -1293,11 +1293,13 @@ textarea::placeholder{
 <div class="label">Valeur du cabinet</div>
 <div class="value" id="dashCabinetValue">0,00 $</div>
 <div class="sub">Caisse + valeur du stock</div>
+<div class="sub">Valeur du stock : <strong id="dashStockValue">0,00 $</strong></div>
 </div>
 <div class="card metric"><span class="rh-metric-icon"><svg class="rh-reference-icon" viewBox="1225 313 62 64" aria-hidden="true" focusable="false"><use href="rhodes-icons-compact.svg#icon-20"></use></svg></span>
 <div class="label">Dépenses du mois</div>
 <div class="value" id="dashMonthExpenses">0,00 $</div>
 <div class="sub" id="dashMonthName">Mois en cours</div>
+<div class="sub">Profits du mois : <strong id="dashMonthProfit">0,00 $</strong></div>
 </div>
 </div>
 <div class="dashboard-three">
@@ -2300,6 +2302,35 @@ textarea::placeholder{
     return state.history.filter(h=>String(h.date||"").startsWith(ym) && (h.type==="ACHAT"||h.type==="CAISSE_SORTIE"||h.type==="FRAIS_LIVRAISON"))
       .reduce((a,h)=>a+Math.max(0,-num(h.cashDelta)),0);
   }
+  function pharmacySaleProfit(h){
+    if(h?.type!=="PHARMACIE_VENTE")return 0;
+    const soldQty=Math.abs(num(h.qty));
+    const revenue=Math.max(0,num(h.cashDelta));
+    const fabricationCost=soldQty*recipeUnitCost(h.resourceId);
+    return revenue-fabricationCost;
+  }
+  function monthPharmacyProfit(){
+    const ym=todayISO().slice(0,7);
+    return state.history
+      .filter(h=>h.type==="PHARMACIE_VENTE" && String(h.date||"").startsWith(ym))
+      .reduce((total,h)=>total+pharmacySaleProfit(h),0);
+  }
+  function weekPharmacyProfit(){
+    const today=new Date(todayISO()+"T12:00:00");
+    const monday=new Date(today);
+    monday.setDate(today.getDate()-((today.getDay()+6)%7));
+    const sunday=new Date(monday);
+    sunday.setDate(monday.getDate()+6);
+    const toISO=d=>[
+      d.getFullYear(),
+      String(d.getMonth()+1).padStart(2,"0"),
+      String(d.getDate()).padStart(2,"0")
+    ].join("-");
+    const start=toISO(monday),end=toISO(sunday);
+    return state.history
+      .filter(h=>h.type==="PHARMACIE_VENTE" && String(h.date||"")>=start && String(h.date||"")<=end)
+      .reduce((total,h)=>total+pharmacySaleProfit(h),0);
+  }
 
 // Cabinet de Rhodes — chaque utilisateur possède son propre carnet, créé depuis le modèle de base.
 const bookSupervisorId='d5deb745-1298-4625-8c1d-6aa0f5ebc9f7';
@@ -3161,10 +3192,12 @@ $('navigationSave').addEventListener('click',async()=>{
     renderOrders();
     renderRecipePricing();
     $("dashCash").textContent=money(state.cash);
-    $("dashStockValue").textContent=money(stockValue());
+    $("dashCabinetProfitWeek").textContent=money(weekPharmacyProfit());
     $("dashPharmacyValue").textContent=money(pharmacyStockValue());
     $("dashCabinetValue").textContent=money(state.cash+stockValue());
+    $("dashStockValue").textContent=money(stockValue());
     $("dashMonthExpenses").textContent=money(monthExpenses());
+    $("dashMonthProfit").textContent=money(monthPharmacyProfit());
     $("cashBig").textContent=money(state.cash);
     $("dashMonthName").textContent=new Intl.DateTimeFormat("fr-FR",{month:"long",year:"numeric"}).format(new Date());
     const low=[...inventoryStockResources()]
