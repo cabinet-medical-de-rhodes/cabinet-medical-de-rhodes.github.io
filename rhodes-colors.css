@@ -1,0 +1,228 @@
+/* Rhodes — bois sombre, terre cuite et parchemin de la bannière. */
+:root {
+  --rd-deep:#682d20;
+  --rd-dark:#2c1e15;
+  --rd-mid:#7a4229;
+  --rd-paper:#f0dfbc;
+  --rd-ivory:#fff0d2;
+  --rd-ink:#34271c;
+  --rd-muted:#60472e;
+  --rd-gold:#c59b54;
+  --rd-line:#966b36;
+  --rd-copper:#773c20;
+  --rd-good:#354d32;
+  --rd-bad:#8b3026;
+  --panel:var(--rd-dark);
+  --panel-2:var(--rd-deep);
+  --wine:var(--rd-deep);
+  --wine-2:var(--rd-mid);
+  --gold:var(--rd-gold);
+  --gold-2:#e1c38e;
+  --paper:var(--rd-paper);
+  --paper-2:var(--rd-ivory);
+  --rh-green:var(--rd-dark);
+  --rh-paper:var(--rd-paper);
+  --rh-cream:var(--rd-ivory);
+  --rh-gold:var(--rd-gold);
+  color-scheme:light;
+}
+
+body {
+  background-color:var(--rd-dark);
+  background-image:linear-gradient(#2c1e15b8,#2c1e15b8),var(--rh-wood);
+  color:var(--rd-ivory);
+}
+main,.view {color:var(--rd-ivory)}
+.sidebar,.topbar {
+  background:linear-gradient(115deg,#643c26d9,#2c1e15eb),var(--rh-grain);
+  border-color:var(--rd-line);
+  box-shadow:inset 0 0 0 3px #2c1e15,inset 0 0 0 4px #c59b5455,0 3px 10px #0008;
+}
+.sidebar .brand h1,.sidebar .brand p,.sidebar .nav button,.sidebar .user-box strong,
+.topbar h2,.topbar p,.date-badge,.date-badge strong {color:var(--rd-ivory)}
+.sidebar .brand {border-bottom-color:var(--rd-gold)}
+.sidebar .brand p {white-space:normal;line-height:1.35;letter-spacing:1px}
+.sidebar .brand p::before,.sidebar .brand p::after {display:none}
+.sidebar .nav button.active {
+  background:linear-gradient(90deg,#7b452e,#623821);
+  border-color:var(--rd-gold);
+  box-shadow:inset 3px 0 var(--rd-gold);
+  color:var(--rd-ivory);
+}
+.sidebar .nav button:hover {background-color:#6a402a;color:var(--rd-ivory)}
+.sidebar #nav button[data-view=bureau] {color:#ead0a0}
+.sidebar .user-box,.sidebar .user-box .mutedline {color:#e1d4b9}
+.sidebar .telegram small,.sidebar .telegram strong {color:var(--rd-deep)}
+.sidebar #organizeNavigation,.sidebar #refreshBtn {background:var(--rd-dark);color:var(--rd-ivory);border-color:var(--rd-line)}
+.sidebar .sync-state.ok {color:#b9e5ce}
+.sidebar .sync-state.busy {color:#f0d398}
+.sidebar .sync-state.bad {color:#ffc2b1}
+.footer {color:#e0c599}
+
+/* Conserver la bannière de Rhodes et le placement de ses textes. */
+#dashboard {border-color:var(--rd-line);box-shadow:0 0 0 3px #2c1e15,0 4px 15px #0006}
+
+/* Sur le papier, chaque information est imprimée en encre sombre. */
+.card {
+  background:var(--rd-paper) var(--rh-parchment) center / 100% 100%;
+  color:var(--rd-ink);border-color:var(--rd-line);
+  box-shadow:0 3px 10px #2c1e1533;
+}
+.card-body,.table-wrap,.inventory-summary,.quick-actions,.history-controls,
+.craft-head,.recipe-note,.westlegacy-panel,.supplier-directory {color:var(--rd-ink)}
+.card p,.card li,.card dd,.card dt,.card .hint,.card .muted,.card .empty,
+.card .craft-order-provider,.card .field label {color:var(--rd-muted)}
+.card h3,.card .resource-name,.card .money,.metric .label,.metric .value,
+#cashBig,#cashBig + .hint,.craft-stock-box span,.craft-stock-box strong {color:var(--rd-deep)}
+.metric .sub {color:var(--rd-muted)}
+.cash-current-label,#cashBig {color:var(--rd-deep)!important}
+.metric.accent {
+  background:linear-gradient(120deg,#6e3b24eb,#2c1e15f2),var(--rh-grain);
+  border-color:var(--rd-gold);
+  box-shadow:inset 0 0 0 3px #2c1e15,inset 0 0 0 4px #c59b5488,0 3px 7px #2c1e1544;
+}
+.metric.accent .label,.metric.accent .value,.metric.accent .sub {color:var(--rd-ivory)}
+.card .section-title,.section-title {
+  background:linear-gradient(100deg,#783925,#682d20);
+  color:var(--rd-ivory);border-bottom-color:var(--rd-line);
+}
+.section-title small {color:#ead4ac}
+#lowStockPanel strong,#recentPanel strong {color:var(--rd-deep)!important}
+#lowStockPanel .hint,#recentPanel .hint,#recentPanel .muted {color:var(--rd-muted)}
+.card th,table thead th,#pharmacy .pharmacy-table th {
+  background:var(--rd-deep);color:var(--rd-ivory);border-color:#ac8050;
+}
+.card td {color:var(--rd-ink);background:#fff3d766;border-color:#966b3655}
+.card tbody tr:nth-child(even) td {background:#ccb08333}
+.card tbody tr:hover td {background:#e0c39366}
+.card td.stock-low {background:#e1b9a566!important}
+#historyBody td strong,#usersBody td strong,#apprenticesBody td strong {color:var(--rd-deep)!important}
+.card .good {color:var(--rd-good)}
+.card .bad {color:var(--rd-bad)}
+.card .warning {background:#edd1b8;border-color:#a56b48;color:#613820}
+.card .recipe-note,.card .orders-payment-summary {background:#d9bd8e66;border-color:var(--rd-line);color:var(--rd-ink)}
+.card .orders-payment-summary span,.card .orders-payment-summary small {color:var(--rd-muted)}
+.card .orders-payment-summary strong {color:var(--rd-deep)}
+.craft-stock-box {background:#d9bd8e66;border-color:var(--rd-line)}
+.progress {background:#d9c9a7;border-color:#7d7057}
+.progress span {background:linear-gradient(90deg,#7a4229,#9b6a34)}
+.progress span.short {background:var(--rd-copper)}
+.card .recipe-matrix td:first-child {background:var(--rd-deep);color:var(--rd-ivory)}
+.card .recipe-matrix th {background:var(--rd-deep)}
+.rh-order-link {color:var(--rd-deep)}
+.rh-dashboard-bottom .pricing-table .not-sold,.pricing-table .not-sold {
+  background:#ecd1bc;color:#71382a;border-color:#a97653;
+}
+.rh-dashboard-bottom .pricing-table .pricing-na {color:#624633;background:#ecd1bc}
+.smoke-color {color:#514a3d}
+.smoke-color:has(.blue) {color:#175275}
+.smoke-color:has(.pink) {color:#843556}
+.smoke-color:has(.green) {color:#354d32}
+.smoke-color:has(.red) {color:#8b3026}
+
+/* Champs et boutons : la même lisibilité dans toutes les rubriques. */
+input,select,textarea,.card input,.card select,.card textarea,
+.card .recipe-matrix input,.rh-dashboard-bottom .pricing-table input,
+.book-report .book-inline-field,.debt-field input {
+  background:#fff6e3;color:var(--rd-ink);border-color:var(--rd-line);
+}
+input::placeholder,textarea::placeholder,.book-report .book-inline-field::placeholder,
+.debt-field input::placeholder {color:#6b5840;opacity:1}
+select option,.card select option {background:#fff6e3;color:var(--rd-ink)}
+input:focus,select:focus,textarea:focus {border-color:var(--rd-mid);box-shadow:0 0 0 2px #7a422933}
+.currency-input::after {color:var(--rd-deep)}
+.btn,.btn.ghost,.card .btn.ghost,.topbar-bureau-shortcut,.order-calendar-btn {
+  background:linear-gradient(#7a4229,#682d20);color:var(--rd-ivory);border-color:var(--rd-line);
+}
+.btn.secondary {background:linear-gradient(#76533c,#513724);color:var(--rd-ivory)}
+.btn.good,.card .btn.good {background:linear-gradient(#42643d,#2c472b);color:var(--rd-ivory)}
+.btn.danger {background:linear-gradient(#853f30,#602a20);color:var(--rd-ivory)}
+#dashboard .orders-form .order-add-wrap .btn.good,#dashboard .quick-actions .btn.good {color:var(--rd-ivory)!important}
+.btn:hover,.topbar-bureau-shortcut:hover {filter:brightness(1.1)}
+:is(button,a,input,select,textarea):focus-visible {outline:2px solid var(--rd-gold);outline-offset:3px}
+.pill,.pill.gold,#lowStockPanel .pill {background:#eee0bf;color:#5a3d1a;border-color:#947044;box-shadow:none}
+.pill.red,#lowStockPanel .pill.red {background:#f1d5c7;color:#7c3025;border-color:#a5654e}
+.pill.green {background:#d7e4cd;color:#294d39;border-color:#6e8768}
+.orders-table .order-status.status-a-commander {background:#f2e1b6;color:#573f17;border-color:#947044}
+.orders-table .order-status.status-en-cours {background:#eee0c4;color:#623c22;border-color:#a27c4e}
+.orders-table .order-status.status-livre {background:#d7e4cd;color:#294d39;border-color:#6e8768}
+#suppliers .supplier-place-row td,#dashboard .orders-table .supplier-group-row td,
+#suppliers .supplier-place-row:hover td,#dashboard .orders-table .supplier-group-row:hover td {
+  background:var(--rd-deep);color:var(--rd-ivory);border-color:var(--rd-line);
+}
+.supplier-directory .location-name {color:var(--rd-deep)}
+.supplier-place-row .supplier-place-heading strong,.supplier-place-products small,
+.supplier-group-meta,.supplier-group-total {color:var(--rd-ivory)}
+#suppliers .supplier-place-products .muted {color:var(--rd-ivory)}
+.supplier-product {background:#2c1e15;color:var(--rd-ivory);border-color:var(--rd-gold)}
+.supplier-edit-title {color:var(--rd-deep)}
+#suppliers .supplier-empty-row td {color:var(--rd-muted)}
+
+/* Le bureau garde un papier clair et une encre lisible, y compris les détails. */
+.bureau-intro strong,.bureau-author {color:var(--rd-deep)}
+.bureau-intro span,.bureau-grade,.bureau-time,.bureau-empty,.bureau-file-size,
+.bureau-typing,.bureau-composer .hint,.bureau-giphy-mark {color:var(--rd-muted)}
+.bureau-body {color:#241b15}
+.bureau-avatar {background:var(--rd-deep);color:#f1d39a;border-color:var(--rd-gold)}
+.bureau-messages {background:#fff1d733}
+.bureau-composer {background:#d5c6a855}
+.bureau-message:hover {background:#7a42290c}
+.bureau-new-divider,.bureau-delete {color:var(--rd-copper)}
+.bureau-new-divider span {background:#ead8b7;border-color:var(--rd-line)}
+.bureau-file-card {color:var(--rd-deep);border-color:var(--rd-line)}
+.bureau-gif-picker {background:var(--rd-dark);border-color:var(--rd-gold)}
+.bureau-gif-state,.bureau-gif-footer,.bureau-gif-close,.bureau-giphy-brand {color:var(--rd-ivory)}
+
+/* Les panneaux sombres conservent une encre claire. Les pages restent en papier. */
+.auth-card,.book-dialog,.supplier-add-dialog,.book-directory,
+#medicineGuide .guide-admin {background:var(--rd-dark);color:var(--rd-ivory);border-color:var(--rd-line)}
+.auth-card h2,.auth-card p,.auth-card .field label,.auth-message,
+.book-dialog .hint,.supplier-add-dialog .field label,
+.book-directory label,.book-divider summary,.book-subtab,.book-tab,
+#medicineGuide .guide-admin .field label {color:var(--rd-ivory)}
+.auth-message {color:#f2cfaa}
+.book-divider {border-color:#9c815355}
+.book-tab:hover,.book-tab.selected {background:var(--rd-mid);color:var(--rd-ivory)}
+.book-paper,.book-paper h2,.book-paper .book-kicker,.book-paper .book-folio,
+.book-paper .book-report,.book-paper .book-oath {color:var(--rd-ink)}
+.book-paper .book-ornament,.book-oath p:first-child:first-letter {color:var(--rd-copper)}
+.book-page-arrow,#medicineGuide .guide-arrow {background:linear-gradient(110deg,#7a4229,#2c1e15,#7a4229);color:#f1d39a;border-color:var(--rd-gold)}
+.book-notice,.book-navigation,#bookStatus,#medicineGuide .guide-counter,#guideStatus {color:#f2dfbb}
+.admin-notebook-index {background:var(--rd-dark)}
+.admin-notebook-group summary,.admin-notebook-link,.admin-notebook-link:hover,.admin-notebook-link.selected {color:var(--rd-ivory)}
+.admin-notebook-group summary,.admin-notebook-link.selected {background:var(--rd-mid)}
+#medicineGuide .guide-paper,#medicineGuide .guide-paper h3,#medicineGuide .guide-final {color:var(--rd-ink)}
+#medicineGuide [hidden] {display:none!important}
+.toast {background:var(--rd-dark);color:var(--rd-ivory);border-color:var(--rd-gold)}
+.westlegacy-panel h3,.westlegacy-panel p {color:var(--rd-deep)}
+
+/* Ardoise et armoire : préserver leurs illustrations et leurs surfaces dédiées. */
+.debt-board {background-color:var(--rd-dark)}
+.debt-board .table-wrap,.debt-board .debt-table td {color:var(--rd-ivory)}
+#pharmacy .pharmacy-glass-ledger-head span,#pharmacy .pharmacy-glass-ledger-head strong,
+#pharmacy .pharmacy-glass-ledger-head small,#pharmacy .pharmacy-remedy,
+#pharmacy .pharmacy-price,#pharmacy .pharmacy-empty {color:var(--rd-deep)}
+
+@media print {
+  .card,.card .section-title,.card th,.card td {background:white!important;color:black!important;box-shadow:none}
+}
+
+/* Bilan mensuel : même registre, même papier, total indépendant des filtres de ligne. */
+.history-profit-summary {
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  margin-bottom:18px;padding:18px 22px;
+  background:linear-gradient(110deg,#f7e8c9d9,#dfc59788);
+  border:1px solid var(--rd-line);border-left:4px solid var(--rd-deep);
+  box-shadow:inset 0 0 0 3px #f9ebce66;
+}
+.history-profit-summary h4 {
+  margin:0 0 7px;color:var(--rd-deep);font-size:18px;line-height:1.4;
+}
+#historyProfitMonth {display:inline-block;margin-left:10px;font-weight:normal;text-transform:capitalize}
+.history-profit-summary p {margin:0 0 5px;color:var(--rd-ink);line-height:1.45}
+.history-profit-summary small {color:var(--rd-muted);line-height:1.45}
+#historyMonthProfit {color:var(--rd-deep);font-size:clamp(25px,2.4vw,36px);white-space:nowrap}
+@media(max-width:700px) {
+  .history-profit-summary {align-items:flex-start;flex-direction:column;gap:12px;padding:16px}
+  #historyProfitMonth {display:block;margin-left:0}
+}
