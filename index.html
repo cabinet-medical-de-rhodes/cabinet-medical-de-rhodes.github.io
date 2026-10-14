@@ -5431,7 +5431,6 @@ $('navigationSave').addEventListener('click',async()=>{
 
 </script>
 <div class="startup-status" role="status" aria-live="polite">Chargement du cabinet…</div>
-
 <style id="book-shared-editor-style">
 #bookSharedEditor{width:min(900px,94vw);max-width:94vw;max-height:90vh;padding:0;border:1px solid #9a784e;border-radius:12px;background:#f3e8cf;color:#332316;box-shadow:0 18px 70px #0009}
 #bookSharedEditor::backdrop{background:#100b08c9;backdrop-filter:blur(3px)}
@@ -5440,9 +5439,10 @@ $('navigationSave').addEventListener('click',async()=>{
 #bookSharedEditor .shared-editor-head p{margin:6px 0 0;font-size:13px;opacity:.85}
 #bookSharedEditor .shared-editor-body{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
 #bookSharedEditor label{display:flex;flex-direction:column;gap:7px;font-weight:700;font-size:14px}
-#bookSharedEditor input,#bookSharedEditor textarea{box-sizing:border-box;width:100%;border:1px solid #b69a72;border-radius:7px;background:#fffaf0;color:#302319;padding:12px 14px;font:16px/1.5 Georgia,serif}
+#bookSharedEditor input,#bookSharedEditor textarea{box-sizing:border-box;width:100%;border:1px solid #b69a72;border-radius:7px;background:#fffaf0;color:#302319;padding:12px 14px;font:16px/1.5 Georgia,serif;outline-offset:2px}
 #bookSharedEditor textarea{min-height:48vh;resize:vertical;white-space:pre-wrap}
-#bookSharedEditor .shared-editor-help{font-size:12px;color:#725a42}
+#bookSharedEditor input:focus,#bookSharedEditor textarea:focus{border-color:#80572f;box-shadow:0 0 0 3px #80572f26}
+#bookSharedEditor .shared-editor-help{font-size:12px;color:#725a42;margin-top:-6px}
 #bookSharedEditor .shared-editor-actions{display:flex;justify-content:flex-end;gap:10px;padding:14px 24px;border-top:1px solid #d1bd9c;background:#ead9b9}
 @media(max-width:600px){#bookSharedEditor .shared-editor-body{padding:14px}#bookSharedEditor textarea{min-height:42vh}#bookSharedEditor .shared-editor-actions{padding:12px;flex-wrap:wrap}}
 </style>
