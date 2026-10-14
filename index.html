@@ -2570,7 +2570,7 @@ function renderBook(){
  if(page?.type==='oath'){
   $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">Cabinet Médical de Rhodes</p><h2>Serment des médecins</h2><div class="book-oath">'+bookOath.map(t=>'<p>'+esc(t)+'</p>').join('')+'</div>'+bookOrnament+'<p class="book-folio">Première page · Honneur & probité</p>';
  }else if(page?.type==='shared'){
-  $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">Cabinet Médical de Rhodes · Consigne commune</p><h2>'+esc(page.title)+'</h2><div class="book-report book-shared-content">'+esc(page.content).replace(/\n/g,'<br>')+'</div>'+bookOrnament+'<p class="book-folio">Page commune · '+(bookPage+1)+'</p>';
+  $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">Cabinet Médical de Rhodes · Consigne commune</p><h2>'+esc(page.title)+'</h2><div class="book-report book-shared-content">'+sharedContentToHtml(page.content)+'</div>'+bookOrnament+'<p class="book-folio">Page commune · '+(bookPage+1)+'</p>';
  }else if(page){
   const cat=bookCategories.find(c=>c.id===page.category_id);
   $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">'+esc(cat?.name)+' · '+esc(page.subcategory)+'</p><h2>'+esc(page.title)+'</h2><div class="book-report">'+renderBookSections(page)+'</div>'+bookOrnament+'<p class="book-folio">Cabinet Médical de Rhodes · '+(bookPage+1)+'</p>';
