@@ -5432,5 +5432,20 @@ $('navigationSave').addEventListener('click',async()=>{
 </script>
 <div class="startup-status" role="status" aria-live="polite">Chargement du cabinet…</div>
 
+<style id="book-shared-editor-style">
+#bookSharedEditor{width:min(900px,94vw);max-width:94vw;max-height:90vh;padding:0;border:1px solid #9a784e;border-radius:12px;background:#f3e8cf;color:#332316;box-shadow:0 18px 70px #0009}
+#bookSharedEditor::backdrop{background:#100b08c9;backdrop-filter:blur(3px)}
+#bookSharedEditor .shared-editor-head{padding:18px 24px;background:#38251a;color:#f5e4c2;border-bottom:1px solid #9a784e}
+#bookSharedEditor .shared-editor-head h2{margin:0;font-family:Georgia,serif;font-size:24px}
+#bookSharedEditor .shared-editor-head p{margin:6px 0 0;font-size:13px;opacity:.85}
+#bookSharedEditor .shared-editor-body{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
+#bookSharedEditor label{display:flex;flex-direction:column;gap:7px;font-weight:700;font-size:14px}
+#bookSharedEditor input,#bookSharedEditor textarea{box-sizing:border-box;width:100%;border:1px solid #b69a72;border-radius:7px;background:#fffaf0;color:#302319;padding:12px 14px;font:16px/1.5 Georgia,serif}
+#bookSharedEditor textarea{min-height:48vh;resize:vertical;white-space:pre-wrap}
+#bookSharedEditor .shared-editor-help{font-size:12px;color:#725a42}
+#bookSharedEditor .shared-editor-actions{display:flex;justify-content:flex-end;gap:10px;padding:14px 24px;border-top:1px solid #d1bd9c;background:#ead9b9}
+@media(max-width:600px){#bookSharedEditor .shared-editor-body{padding:14px}#bookSharedEditor textarea{min-height:42vh}#bookSharedEditor .shared-editor-actions{padding:12px;flex-wrap:wrap}}
+</style>
+<dialog id="bookSharedEditor" aria-labelledby="bookSharedEditorHeading"><form id="bookSharedEditorForm"><div class="shared-editor-head"><h2 id="bookSharedEditorHeading">Page commune du carnet</h2><p>Le contenu sera partagé avec tous les utilisateurs du cabinet.</p></div><div class="shared-editor-body"><label for="bookSharedTitleInput">Titre de la page<input id="bookSharedTitleInput" maxlength="200" required placeholder="Ex. Procédure d'intervention"></label><label for="bookSharedContentInput">Contenu de la page<textarea id="bookSharedContentInput" required placeholder="Rédigez le contenu complet ici…"></textarea></label><div class="shared-editor-help">Vous pouvez saisir un texte long et utiliser les retours à la ligne.</div></div><div class="shared-editor-actions"><button type="button" class="btn secondary" id="bookSharedEditorCancel">Annuler</button><button type="submit" class="btn good" id="bookSharedEditorSave">Enregistrer la page</button></div></form></dialog>
 </body>
 </html>
