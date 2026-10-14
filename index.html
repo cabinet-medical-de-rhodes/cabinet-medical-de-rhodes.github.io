@@ -1167,6 +1167,13 @@ textarea::placeholder{
   color:#392718;
 }
 
+  .shared-rich-tools{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
+  .shared-rich-editor{width:100%;min-height:460px;max-height:65vh;overflow:auto;padding:20px 22px;border:1px solid #a67d40;border-radius:4px;background:#fff8e6;color:#33271c;font:17px/1.65 Georgia,"Times New Roman",serif;resize:vertical;outline:none}
+  .shared-rich-editor:focus{border-color:#d1a85d;box-shadow:0 0 0 3px rgba(209,168,93,.18)}
+  .shared-rich-editor h3,.shared-rich-display h3{color:#6f1a12}
+  .shared-rich-display{white-space:normal;line-height:1.65}
+  .shared-rich-display p{margin:.5em 0}
+  .shared-rich-display ul,.shared-rich-display ol{padding-left:1.5em}
 </style>
 <link rel="stylesheet" href="rhodes-theme.css?v=20260929-reference-icons">
 
@@ -1927,7 +1934,7 @@ textarea::placeholder{
   </div>
 </section>
 <section id="consultations" class="view">
- <div class="book-toolbar"><button id="bookHome" class="btn">Couverture</button><button id="bookRefresh" class="btn secondary">Actualiser le carnet</button><button id="bookNew" class="btn" hidden>Ajouter un rapport</button><button id="bookCategoryEdit" class="btn" hidden>Gérer les intercalaires</button><span id="bookStatus" role="status"></span></div>
+ <div class="book-toolbar"><button id="bookHome" class="btn">Couverture</button><button id="bookRefresh" class="btn secondary">Actualiser le carnet</button><button id="bookNew" class="btn" hidden>Ajouter un rapport</button><button id="bookCategoryEdit" class="btn" hidden>Gérer les intercalaires</button><button id="bookSharedManage" class="btn" hidden>Gérer les pages communes</button><span id="bookStatus" role="status"></span></div>
  <div class="book-layout">
   <aside class="book-directory" aria-label="Intercalaires"><label for="bookSearch">Rechercher dans le carnet</label><input id="bookSearch" type="search" placeholder="Blessure, zone, mot-clé…"><div id="bookIndex"></div></aside>
   <div class="book-stage">
@@ -1945,7 +1952,8 @@ textarea::placeholder{
 <p class="hint">Place le curseur dans le texte puis clique sur le type de case à insérer. Chaque partie aura son propre bouton Copier dans le carnet.</p>
 <details class="book-editor-identity"><summary>En-tête et signature du rapport</summary><label>En-tête<textarea id="bookHeaderInput"></textarea></label><label>Signature / pied de page<textarea id="bookFooterInput"></textarea></label></details><div class="book-toolbar"><button id="bookSave" class="btn good" type="submit">Enregistrer</button><button id="bookCloseEditor" class="btn secondary" type="button">Fermer</button><button id="bookArchive" class="btn danger" type="button">Archiver ce rapport</button></div></form>
  </dialog>
- <dialog id="bookCategoriesDialog" class="book-dialog"><form id="bookCategoryForm"><h3>Intercalaires</h3><label>Ajouter ou modifier<select id="bookCategorySelect"></select></label><label>Nom<input id="bookCategoryName" required maxlength="120"></label><label>Ordre dans le carnet<input id="bookCategoryOrder" type="number" step="1" required></label><div class="book-toolbar"><button id="bookCategorySave" class="btn" type="submit">Enregistrer</button><button id="bookCategoryDelete" class="btn danger" type="button" hidden>Supprimer l’intercalaire</button><button id="bookCloseCategories" class="btn secondary" type="button">Fermer</button></div></form></dialog>
+ <dialog id="bookSharedEditor" class="book-dialog"><form id="bookSharedForm"><h3 id="bookSharedHeading">Page commune du carnet</h3><label>Titre de la page<input id="bookSharedTitle" required maxlength="160"></label><label>Contenu de la page</label><div class="shared-rich-tools" role="toolbar" aria-label="Mise en forme du texte"><button type="button" class="btn secondary" data-shared-command="bold"><b>Gras</b></button><button type="button" class="btn secondary" data-shared-command="italic"><i>Italique</i></button><button type="button" class="btn secondary" data-shared-command="underline"><u>Souligné</u></button><button type="button" class="btn secondary" data-shared-command="insertUnorderedList">• Liste</button><button type="button" class="btn secondary" data-shared-command="insertOrderedList">1. Liste</button><button type="button" class="btn secondary" data-shared-command="formatBlock" data-shared-value="h3">Titre</button><button type="button" class="btn secondary" data-shared-command="removeFormat">Effacer le format</button></div><div id="bookSharedContent" class="shared-rich-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Texte de la page commune"></div><p class="hint">Zone de saisie large avec mise en forme. Les pages communes sont visibles dans tous les carnets et seul un administrateur peut les modifier ou les supprimer.</p><div class="book-toolbar"><button id="bookSharedSave" class="btn good" type="submit">Enregistrer la page</button><button id="bookSharedDelete" class="btn danger" type="button" hidden>Supprimer la page</button><button id="bookSharedClose" class="btn secondary" type="button">Fermer</button></div></form></dialog>
+<dialog id="bookCategoriesDialog" class="book-dialog"><form id="bookCategoryForm"><h3>Intercalaires</h3><label>Ajouter ou modifier<select id="bookCategorySelect"></select></label><label>Nom<input id="bookCategoryName" required maxlength="120"></label><label>Ordre dans le carnet<input id="bookCategoryOrder" type="number" step="1" required></label><div class="book-toolbar"><button id="bookCategorySave" class="btn" type="submit">Enregistrer</button><button id="bookCategoryDelete" class="btn danger" type="button" hidden>Supprimer l’intercalaire</button><button id="bookCloseCategories" class="btn secondary" type="button">Fermer</button></div></form></dialog>
 </section>
 
 <section id="notebooksAdmin" class="view">
@@ -2377,6 +2385,7 @@ const bookSupervisorId='d5deb745-1298-4625-8c1d-6aa0f5ebc9f7';
 const isBookSupervisor=()=>currentUser?.id===bookSupervisorId && isAdmin;
 const canEditBook=()=>!!currentUser && currentProfile?.access_status==="approved";
 let bookCategories=[],bookReports=[],bookPage=-1,bookBusy=false,bookLoaded=false,bookOrderSaving=false;
+let bookSharedPages=[];
 const bookOath=[
 "Au moment d'être admis à exercer la médecine, je promets et je jure d'être fidèle aux lois de l'honneur et de la probité.",
 "Mon premier souci sera de rétablir, de préserver ou de promouvoir la santé dans tous ses éléments, physiques et mentaux, individuels et sociaux.",
@@ -2401,7 +2410,7 @@ function compareBookReports(a,b){
 function bookReportGroup(report){
  return bookReports.filter(r=>r.category_id===report.category_id && (r.subcategory||'')===(report.subcategory||'')).sort(compareBookReports);
 }
-function bookPages(){return [{type:'oath'},...bookReports.filter(r=>bookCategories.some(c=>c.id===r.category_id)).sort((a,b)=>{
+function bookPages(){return [{type:'oath'},...bookSharedPages.map(p=>({...p,type:'shared'})),...bookReports.filter(r=>bookCategories.some(c=>c.id===r.category_id)).sort((a,b)=>{
  const ca=bookCategories.findIndex(c=>c.id===a.category_id),cb=bookCategories.findIndex(c=>c.id===b.category_id);
  return ca-cb || compareBookReports(a,b);
 })];}
@@ -2411,12 +2420,13 @@ async function loadBook(){
  try{
   const init=await db.rpc('ensure_personal_consultation_notebook',{p_owner_id:currentUser.id});
   if(init.error)throw init.error;
-  const [cats,reports]=await Promise.all([
+  const [cats,reports,shared]=await Promise.all([
    db.from('consultation_user_categories').select('*').eq('owner_id',currentUser.id).order('sort_order').order('name'),
-   db.from('consultation_user_templates').select('*').eq('owner_id',currentUser.id).eq('active',true)
+   db.from('consultation_user_templates').select('*').eq('owner_id',currentUser.id).eq('active',true),
+   db.from('consultation_shared_pages').select('*').order('sort_order').order('created_at')
   ]);
-  if(cats.error)throw cats.error;if(reports.error)throw reports.error;
-  bookCategories=cats.data||[];bookReports=reports.data||[];bookLoaded=true;
+  if(cats.error)throw cats.error;if(reports.error)throw reports.error;if(shared.error)throw shared.error;
+  bookCategories=cats.data||[];bookReports=reports.data||[];bookSharedPages=shared.data||[];bookLoaded=true;
   bookPage=Math.min(bookPage,bookPages().length-1);renderBook();
   $('bookStatus').textContent=bookReports.length+' rapports · '+bookCategories.length+' intercalaires · carnet personnel';
  }catch(e){$('bookStatus').textContent='Chargement impossible. Clique sur Actualiser le carnet.';dbError(e);}finally{bookBusy=false;renderBookIndex();}
@@ -2556,14 +2566,16 @@ $('bookPaper').addEventListener('change',e=>{
 function renderBook(){
  const pages=bookPages(),page=pages[bookPage];
  $('bookCover').hidden=bookPage!==-1;$('bookPaper').hidden=bookPage===-1;
- $('bookEdit').hidden=!canEditBook()||!page?.id;
- $('bookNew').hidden=!canEditBook();$('bookCategoryEdit').hidden=!canEditBook();
+ $('bookEdit').hidden=!page?.id||(page?.type==='shared'?!isAdmin:!canEditBook());
+ $('bookNew').hidden=!canEditBook();$('bookCategoryEdit').hidden=!canEditBook();$('bookSharedManage').hidden=!isAdmin;
  $('bookPrev').disabled=bookPage<0;$('bookNext').disabled=bookPage>=pages.length-1||!bookLoaded;
  $('bookCounter').textContent=bookPage<0?'Édition 1889':(bookPage+1)+' / '+pages.length;
  $('bookCopy').hidden=!page?.id;
  $('bookReset').hidden=!page?.id;
  if(page?.type==='oath'){
   $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">Cabinet Médical de Rhodes</p><h2>Serment des médecins</h2><div class="book-oath">'+bookOath.map(t=>'<p>'+esc(t)+'</p>').join('')+'</div>'+bookOrnament+'<p class="book-folio">Première page · Honneur & probité</p>';
+ }else if(page?.type==='shared'){
+  $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">Consignes communes · Cabinet Médical de Rhodes</p><h2>'+esc(page.title)+'</h2><div class="book-report shared-rich-display">'+safeSharedHtml(page.content)+'</div>'+bookOrnament+'<p class="book-folio">Page commune · '+(bookPage+1)+'</p>';
  }else if(page){
   const cat=bookCategories.find(c=>c.id===page.category_id);
   $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">'+esc(cat?.name)+' · '+esc(page.subcategory)+'</p><h2>'+esc(page.title)+'</h2><div class="book-report">'+renderBookSections(page)+'</div>'+bookOrnament+'<p class="book-folio">Cabinet Médical de Rhodes · '+(bookPage+1)+'</p>';
@@ -2574,7 +2586,7 @@ function renderBookIndex(){
  const term=$('bookSearch').value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
  const opened=new Set(Array.from($('bookIndex').querySelectorAll('details[open]'),el=>el.dataset.bookCategory));
  const pages=bookPages();
- $('bookIndex').innerHTML='<button class="book-tab" data-page="0">⚕ Serment des médecins</button>'+bookCategories.map(c=>{
+ $('bookIndex').innerHTML='<button class="book-tab" data-page="0">⚕ Serment des médecins</button>'+pages.map((p,i)=>({...p,page:i})).filter(p=>p.type==='shared'&&[p.title,p.content].join(' ').replace(/<[^>]*>/g,' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(term)).map(p=>'<button class="book-tab '+(p.page===bookPage?'selected':'')+'" data-page="'+p.page+'">📜 '+esc(p.title)+'</button>').join('')+bookCategories.map(c=>{
   const list=pages.map((r,i)=>({...r,page:i})).filter(r=>r.category_id===c.id && [r.title,r.subcategory,r.body].join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(term));
   if(!list.length)return '';
   return '<details class="book-divider" data-book-category="'+esc(c.id)+'"'+(term||opened.has(c.id)||list.some(r=>r.page===bookPage)?' open':'')+'><summary>'+esc(c.name)+' <small>'+list.length+'</small></summary>'+[...new Set(list.map(r=>r.subcategory))].map(sub=>
@@ -2685,7 +2697,14 @@ $('bookPrev').addEventListener('click',()=>turnBook(bookPage-1));
 $('bookNext').addEventListener('click',()=>turnBook(bookPage+1));
 $('bookHome').addEventListener('click',()=>turnBook(-1));
 $('bookRefresh').addEventListener('click',loadBook);
-$('bookEdit').addEventListener('click',()=>openBookEditor(false));
+$('bookEdit').addEventListener('click',()=>{const p=bookPages()[bookPage];if(p?.type==='shared'){if(isAdmin)openSharedEditor(p);return;}openBookEditor(false);});
+function safeSharedHtml(html){const box=document.createElement('div');box.innerHTML=String(html||'');box.querySelectorAll('script,style,iframe,object,embed,form,input,button,textarea,link,meta').forEach(n=>n.remove());box.querySelectorAll('*').forEach(n=>{Array.from(n.attributes).forEach(a=>{if(/^on/i.test(a.name)||((a.name==='href'||a.name==='src')&&!/^(https?:|mailto:|#)/i.test(a.value)))n.removeAttribute(a.name);});});return box.innerHTML;}
+function openSharedEditor(page=null){if(!isAdmin)return;const p=page||null;$('bookSharedForm').dataset.id=p?.id||'';$('bookSharedTitle').value=p?.title||'';$('bookSharedContent').innerHTML=p?.content||'';$('bookSharedHeading').textContent=p?'Modifier une page commune':'Ajouter une page commune';$('bookSharedDelete').hidden=!p;$('bookSharedEditor').showModal();}
+$('bookSharedManage').addEventListener('click',()=>{if(!isAdmin)return;const pages=bookSharedPages.map((p,i)=>(i+1)+'. '+p.title).join('\n');const choice=prompt('Pages communes existantes :\n'+(pages||'Aucune')+'\n\nEntre le numéro d’une page à modifier, ou laisse vide pour en créer une nouvelle.');if(choice===null)return;if(!choice.trim()){openSharedEditor();return;}const p=bookSharedPages[Number(choice)-1];if(p)openSharedEditor(p);else toast('Numéro de page invalide.');});
+$('bookSharedEditor').addEventListener('click',e=>{const b=e.target.closest('[data-shared-command]');if(!b)return;$('bookSharedContent').focus();document.execCommand(b.dataset.sharedCommand,false,b.dataset.sharedValue||null);});
+$('bookSharedClose').addEventListener('click',()=> $('bookSharedEditor').close());
+$('bookSharedForm').addEventListener('submit',async e=>{e.preventDefault();if(!isAdmin)return;const id=e.currentTarget.dataset.id;const title=$('bookSharedTitle').value.trim();const content=safeSharedHtml($('bookSharedContent').innerHTML);if(!title||!content.trim()){toast('Renseigne le titre et le contenu de la page.');return;}const record={title,content,updated_at:new Date().toISOString()};$('bookSharedSave').disabled=true;try{let q;if(id)q=db.from('consultation_shared_pages').update(record).eq('id',id);else{record.sort_order=Math.max(0,...bookSharedPages.map(p=>num(p.sort_order)))+10;q=db.from('consultation_shared_pages').insert(record);}const {error}=await q;if(error)throw error;$('bookSharedEditor').close();await loadBook();toast('Page commune enregistrée pour tous les carnets.');}catch(err){dbError(err,'Impossible d’enregistrer la page commune.');}finally{$('bookSharedSave').disabled=false;}});
+$('bookSharedDelete').addEventListener('click',async()=>{if(!isAdmin)return;const id=$('bookSharedForm').dataset.id;if(!id||!confirm('Supprimer cette page commune de tous les carnets ?'))return;try{const {error}=await db.from('consultation_shared_pages').delete().eq('id',id);if(error)throw error;$('bookSharedEditor').close();bookPage=0;await loadBook();toast('Page commune supprimée.');}catch(err){dbError(err,'Impossible de supprimer cette page.');}});
 $('bookNew').addEventListener('click',()=>openBookEditor(true));
 $('bookCloseEditor').addEventListener('click',()=>{if(confirm('Fermer sans enregistrer les modifications ?'))$('bookEditor').close();});
 $('bookSaveForm').addEventListener('submit',async e=>{
