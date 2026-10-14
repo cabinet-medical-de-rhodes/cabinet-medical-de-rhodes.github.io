@@ -2692,9 +2692,36 @@ $('bookPrev').addEventListener('click',()=>turnBook(bookPage-1));
 $('bookNext').addEventListener('click',()=>turnBook(bookPage+1));
 $('bookHome').addEventListener('click',()=>turnBook(-1));
 $('bookRefresh').addEventListener('click',loadBook);
-$('bookSharedAdd').addEventListener('click',async()=>{if(!canManageSharedBook())return;const title=prompt('Titre de la nouvelle page commune :');if(!title?.trim())return;const content=prompt('Contenu de la page (retours à la ligne possibles) :');if(content===null)return;const {error}=await db.from('consultation_shared_pages').insert({title:title.trim(),content,sort_order:bookSharedPages.length});if(error){dbError(error);return;}await loadBook();bookPage=bookPages().findIndex(p=>p.type==='shared'&&p.title===title.trim());renderBook();toast('Page commune ajoutée à tous les carnets.');});
-$('bookSharedEdit').addEventListener('click',async()=>{const page=bookPages()[bookPage];if(!canManageSharedBook()||page?.type!=='shared')return;const title=prompt('Titre de la page :',page.title);if(!title?.trim())return;const content=prompt('Contenu de la page :',page.content);if(content===null)return;const {error}=await db.from('consultation_shared_pages').update({title:title.trim(),content,updated_at:new Date().toISOString()}).eq('id',page.id);if(error){dbError(error);return;}await loadBook();bookPage=bookPages().findIndex(p=>p.id===page.id);renderBook();toast('Page commune mise à jour.');});
-$('bookSharedDelete').addEventListener('click',async()=>{const page=bookPages()[bookPage];if(!canManageSharedBook()||page?.type!=='shared'||!confirm('Supprimer cette page commune pour tous les utilisateurs ?'))return;const {error}=await db.from('consultation_shared_pages').delete().eq('id',page.id);if(error){dbError(error);return;}await loadBook();bookPage=Math.max(0,bookPage-1);renderBook();toast('Page commune supprimée.');});
+let editingSharedPageId=null;
+function openSharedPageEditor(page=null){
+ if(!canManageSharedBook())return;
+ editingSharedPageId=page?.id||null;
+ $('bookSharedEditorHeading').textContent=page?'Modifier la page commune':'Ajouter une page commune';
+ $('bookSharedTitleInput').value=page?.title||'';
+ $('bookSharedContentInput').value=page?.content||'';
+ $('bookSharedEditorSave').textContent=page?'Enregistrer les modifications':'Créer la page';
+ $('bookSharedEditor').showModal();
+ $('bookSharedTitleInput').focus();
+}
+$('bookSharedAdd').addEventListener('click',()=>openSharedPageEditor());
+$('bookSharedEdit').addEventListener('click',()=>{const page=bookPages()[bookPage];if(page?.type==='shared')openSharedPageEditor(page);});
+$('bookSharedEditorCancel').addEventListener('click',()=>$('bookSharedEditor').close());
+$('bookSharedEditorForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(!canManageSharedBook())return;
+ const title=$('bookSharedTitleInput').value.trim(),content=$('bookSharedContentInput').value;
+ if(!title)return;
+ $('bookSharedEditorSave').disabled=true;
+ try{
+  let result;
+  if(editingSharedPageId)result=await db.from('consultation_shared_pages').update({title,content,updated_at:new Date().toISOString()}).eq('id',editingSharedPageId);
+  else result=await db.from('consultation_shared_pages').insert({title,content,sort_order:bookSharedPages.length});
+  if(result.error)throw result.error;
+  $('bookSharedEditor').close();await loadBook();
+  bookPage=bookPages().findIndex(p=>p.type==='shared'&&(editingSharedPageId?p.id===editingSharedPageId:p.title===title));
+  renderBook();toast(editingSharedPageId?'Page commune mise à jour.':'Page commune ajoutée à tous les carnets.');
+ }catch(error){dbError(error);}finally{$('bookSharedEditorSave').disabled=false;}
+});
+
 $('bookEdit').addEventListener('click',()=>openBookEditor(false));
 $('bookNew').addEventListener('click',()=>openBookEditor(true));
 $('bookCloseEditor').addEventListener('click',()=>{if(confirm('Fermer sans enregistrer les modifications ?'))$('bookEditor').close();});
@@ -5404,5 +5431,21 @@ $('navigationSave').addEventListener('click',async()=>{
 
 </script>
 <div class="startup-status" role="status" aria-live="polite">Chargement du cabinet…</div>
+<style id="book-shared-editor-style">
+#bookSharedEditor{width:min(900px,94vw);max-width:94vw;max-height:90vh;padding:0;border:1px solid #9a784e;border-radius:12px;background:#f3e8cf;color:#332316;box-shadow:0 18px 70px #0009}
+#bookSharedEditor::backdrop{background:#100b08c9;backdrop-filter:blur(3px)}
+#bookSharedEditor .shared-editor-head{padding:18px 24px;background:#38251a;color:#f5e4c2;border-bottom:1px solid #9a784e}
+#bookSharedEditor .shared-editor-head h2{margin:0;font-family:Georgia,serif;font-size:24px}
+#bookSharedEditor .shared-editor-head p{margin:6px 0 0;font-size:13px;opacity:.85}
+#bookSharedEditor .shared-editor-body{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
+#bookSharedEditor label{display:flex;flex-direction:column;gap:7px;font-weight:700;font-size:14px}
+#bookSharedEditor input,#bookSharedEditor textarea{box-sizing:border-box;width:100%;border:1px solid #b69a72;border-radius:7px;background:#fffaf0;color:#302319;padding:12px 14px;font:16px/1.5 Georgia,serif;outline-offset:2px}
+#bookSharedEditor textarea{min-height:48vh;resize:vertical;white-space:pre-wrap}
+#bookSharedEditor input:focus,#bookSharedEditor textarea:focus{border-color:#80572f;box-shadow:0 0 0 3px #80572f26}
+#bookSharedEditor .shared-editor-help{font-size:12px;color:#725a42;margin-top:-6px}
+#bookSharedEditor .shared-editor-actions{display:flex;justify-content:flex-end;gap:10px;padding:14px 24px;border-top:1px solid #d1bd9c;background:#ead9b9}
+@media(max-width:600px){#bookSharedEditor .shared-editor-body{padding:14px}#bookSharedEditor textarea{min-height:42vh}#bookSharedEditor .shared-editor-actions{padding:12px;flex-wrap:wrap}}
+</style>
+<dialog id="bookSharedEditor" aria-labelledby="bookSharedEditorHeading"><form id="bookSharedEditorForm"><div class="shared-editor-head"><h2 id="bookSharedEditorHeading">Page commune du carnet</h2><p>Le contenu sera partagé avec tous les utilisateurs du cabinet.</p></div><div class="shared-editor-body"><label for="bookSharedTitleInput">Titre de la page<input id="bookSharedTitleInput" maxlength="200" required placeholder="Ex. Procédure d'intervention"></label><label for="bookSharedContentInput">Contenu de la page<textarea id="bookSharedContentInput" required placeholder="Rédigez le contenu complet ici…"></textarea></label><div class="shared-editor-help">Vous pouvez saisir un texte long et utiliser les retours à la ligne.</div></div><div class="shared-editor-actions"><button type="button" class="btn secondary" id="bookSharedEditorCancel">Annuler</button><button type="submit" class="btn good" id="bookSharedEditorSave">Enregistrer la page</button></div></form></dialog>
 </body>
 </html>
