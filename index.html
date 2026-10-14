@@ -1927,7 +1927,7 @@ textarea::placeholder{
   </div>
 </section>
 <section id="consultations" class="view">
- <div class="book-toolbar"><button id="bookHome" class="btn">Couverture</button><button id="bookRefresh" class="btn secondary">Actualiser le carnet</button><button id="bookNew" class="btn" hidden>Ajouter un rapport</button><button id="bookCategoryEdit" class="btn" hidden>Gérer les intercalaires</button><span id="bookStatus" role="status"></span></div>
+ <div class="book-toolbar"><button id="bookHome" class="btn">Couverture</button><button id="bookRefresh" class="btn secondary">Actualiser le carnet</button><button id="bookNew" class="btn" hidden>Ajouter un rapport</button><button id="bookCategoryEdit" class="btn" hidden>Gérer les intercalaires</button><button id="bookSharedAdd" class="btn" hidden>Ajouter une page commune</button><button id="bookSharedEdit" class="btn" hidden>Modifier la page commune</button><button id="bookSharedDelete" class="btn danger" hidden>Supprimer la page commune</button><span id="bookStatus" role="status"></span></div>
  <div class="book-layout">
   <aside class="book-directory" aria-label="Intercalaires"><label for="bookSearch">Rechercher dans le carnet</label><input id="bookSearch" type="search" placeholder="Blessure, zone, mot-clé…"><div id="bookIndex"></div></aside>
   <div class="book-stage">
@@ -2376,7 +2376,8 @@ textarea::placeholder{
 const bookSupervisorId='d5deb745-1298-4625-8c1d-6aa0f5ebc9f7';
 const isBookSupervisor=()=>currentUser?.id===bookSupervisorId && isAdmin;
 const canEditBook=()=>!!currentUser && currentProfile?.access_status==="approved";
-let bookCategories=[],bookReports=[],bookPage=-1,bookBusy=false,bookLoaded=false,bookOrderSaving=false;
+let bookCategories=[],bookReports=[],bookSharedPages=[],bookPage=-1,bookBusy=false,bookLoaded=false,bookOrderSaving=false;
+const canManageSharedBook=()=>!!currentUser && isAdmin && currentProfile?.access_status==='approved';
 const bookOath=[
 "Au moment d'être admis à exercer la médecine, je promets et je jure d'être fidèle aux lois de l'honneur et de la probité.",
 "Mon premier souci sera de rétablir, de préserver ou de promouvoir la santé dans tous ses éléments, physiques et mentaux, individuels et sociaux.",
@@ -2392,6 +2393,7 @@ const bookOath=[
 "Que les hommes et mes confrères m'accordent leur estime si je suis fidèle à mes promesses ; que je sois déshonoré et méprisé si j'y manque."
 ];
 const bookOrnament='<div class="book-ornament" aria-hidden="true">❦ ───── ⚕ ───── ❦</div>';
+async function ensureScalpelPage(){const {data,error}=await db.from('consultation_shared_pages').select('id').eq('title','Méthode S.C.A.L.P.E.L.').limit(1);if(error)throw error;if(!data?.length){const result=await db.from('consultation_shared_pages').insert({title:'Méthode S.C.A.L.P.E.L.',content:"Désignation du Lead\n\nUn médecin prend le lead et dirige l'intervention. La prise de Lead se fait selon cet ordre de priorité : Chef de cabinet → Adjoint → Médecin confirmé. Un apprenti ne peut pas prendre le Lead d'une ZN.\n\nLa priorité d'intervention revient au comté concerné, avec possibilité de renforts extérieurs.\n\nSécurisation de la zone\n\nApprocher prudemment et signaler sa présence en tant que médecin.\nAttendre le fumigène vert des forces de l'ordre ou l'arrêt raisonnablement confirmé des tirs.\nPrivilégier une escorte des forces de l'ordre.\n\nCommunication et renforts\n\nLe Lead annonce par pigeon la prise en charge, le point de RDV sécurisé et les renforts nécessaires.\nExemple — Lead\n« Hudson Lead ZN Scarlett, RDV Y de Lemoyne, besoin 2 renforts. »\n\nExemple — Renfort\n« Morrigan renfort pour ZN Scarlett. »\n\nRegroupement des médecins\n\nRejoindre le point de RDV défini, à distance du danger.\nAttendre les renforts avant d'intervenir.\nSi la zone est sécurisée et que l'équipe avance, prévenir les médecins encore en route. Exemple : ZN Great Plain zone sécurisée. RDV sur place.\n\nPrise en charge des blessés\n\nSous la coordination du Lead :\nRegrouper et recenser tous les blessés.\nEffectuer le tri des patients.\nRéanimer les inconscients, stabiliser les blessures et réaliser les soins complets.\nRelever l'identité de chaque patient.\n\nCas particulier : ZN Train\n\nRemonter les rails dans le sens de circulation du train afin de retrouver les éventuels blessés tombés du convoi.\n\nClôture de la Zone Noire\n\nVérifier avec les collègues que tous les patients ont été pris en charge.\nSignaler et régler les éventuels incidents.\nRédiger les dossiers médicaux.\n\nLa ZN est terminée après vérification et rédaction des dossiers.\n\nÀ retenir : Sécuriser → Communiquer → Regrouper → Trier → Soigner → Vérifier → Rédiger.\n\nAutrement dit nous mettons en place la méthode SCALPEL !\n\nMéthode S.C.A.L.P.E.L.\nS — Sécuriser la zone avant toute intervention.\nC — Communiquer la prise en charge et demander des renforts.\nA — Attendre et rassembler les médecins au point de RDV.\nL — Localiser tous les blessés et effectuer le tri.\nP — Prendre en charge les patients (réanimation, stabilisation, soins).\nE — Examiner la situation et vérifier que personne n'a été oublié.\nL — Lister les soins et rédiger les dossiers médicaux.",sort_order:0});if(result.error)throw result.error;}}
 function compareBookReports(a,b){
  return String(a.subcategory||'').localeCompare(String(b.subcategory||''),'fr')
   || num(a.sort_order)-num(b.sort_order)
@@ -2401,7 +2403,7 @@ function compareBookReports(a,b){
 function bookReportGroup(report){
  return bookReports.filter(r=>r.category_id===report.category_id && (r.subcategory||'')===(report.subcategory||'')).sort(compareBookReports);
 }
-function bookPages(){return [{type:'oath'},...bookReports.filter(r=>bookCategories.some(c=>c.id===r.category_id)).sort((a,b)=>{
+function bookPages(){return [{type:'oath'},...bookSharedPages.map(p=>({...p,type:'shared'})),...bookReports.filter(r=>bookCategories.some(c=>c.id===r.category_id)).sort((a,b)=>{
  const ca=bookCategories.findIndex(c=>c.id===a.category_id),cb=bookCategories.findIndex(c=>c.id===b.category_id);
  return ca-cb || compareBookReports(a,b);
 })];}
@@ -2411,12 +2413,14 @@ async function loadBook(){
  try{
   const init=await db.rpc('ensure_personal_consultation_notebook',{p_owner_id:currentUser.id});
   if(init.error)throw init.error;
-  const [cats,reports]=await Promise.all([
+  await ensureScalpelPage();
+  const [cats,reports,shared]=await Promise.all([
    db.from('consultation_user_categories').select('*').eq('owner_id',currentUser.id).order('sort_order').order('name'),
-   db.from('consultation_user_templates').select('*').eq('owner_id',currentUser.id).eq('active',true)
+   db.from('consultation_user_templates').select('*').eq('owner_id',currentUser.id).eq('active',true),
+   db.from('consultation_shared_pages').select('*').order('sort_order').order('created_at')
   ]);
-  if(cats.error)throw cats.error;if(reports.error)throw reports.error;
-  bookCategories=cats.data||[];bookReports=reports.data||[];bookLoaded=true;
+  if(cats.error)throw cats.error;if(reports.error)throw reports.error;if(shared.error)throw shared.error;
+  bookCategories=cats.data||[];bookReports=reports.data||[];bookSharedPages=shared.data||[];bookLoaded=true;
   bookPage=Math.min(bookPage,bookPages().length-1);renderBook();
   $('bookStatus').textContent=bookReports.length+' rapports · '+bookCategories.length+' intercalaires · carnet personnel';
  }catch(e){$('bookStatus').textContent='Chargement impossible. Clique sur Actualiser le carnet.';dbError(e);}finally{bookBusy=false;renderBookIndex();}
@@ -2556,14 +2560,17 @@ $('bookPaper').addEventListener('change',e=>{
 function renderBook(){
  const pages=bookPages(),page=pages[bookPage];
  $('bookCover').hidden=bookPage!==-1;$('bookPaper').hidden=bookPage===-1;
- $('bookEdit').hidden=!canEditBook()||!page?.id;
+ $('bookEdit').hidden=!canEditBook()||!page?.id||page?.type==='shared';
  $('bookNew').hidden=!canEditBook();$('bookCategoryEdit').hidden=!canEditBook();
+ $('bookSharedAdd').hidden=!canManageSharedBook();$('bookSharedEdit').hidden=!canManageSharedBook()||page?.type!=='shared';$('bookSharedDelete').hidden=!canManageSharedBook()||page?.type!=='shared';
  $('bookPrev').disabled=bookPage<0;$('bookNext').disabled=bookPage>=pages.length-1||!bookLoaded;
  $('bookCounter').textContent=bookPage<0?'Édition 1889':(bookPage+1)+' / '+pages.length;
- $('bookCopy').hidden=!page?.id;
- $('bookReset').hidden=!page?.id;
+ $('bookCopy').hidden=!page?.id||page?.type==='shared';
+ $('bookReset').hidden=!page?.id||page?.type==='shared';
  if(page?.type==='oath'){
   $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">Cabinet Médical de Rhodes</p><h2>Serment des médecins</h2><div class="book-oath">'+bookOath.map(t=>'<p>'+esc(t)+'</p>').join('')+'</div>'+bookOrnament+'<p class="book-folio">Première page · Honneur & probité</p>';
+ }else if(page?.type==='shared'){
+  $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">Cabinet Médical de Rhodes · Consigne commune</p><h2>'+esc(page.title)+'</h2><div class="book-report book-shared-content">'+esc(page.content).replace(/\n/g,'<br>')+'</div>'+bookOrnament+'<p class="book-folio">Page commune · '+(bookPage+1)+'</p>';
  }else if(page){
   const cat=bookCategories.find(c=>c.id===page.category_id);
   $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">'+esc(cat?.name)+' · '+esc(page.subcategory)+'</p><h2>'+esc(page.title)+'</h2><div class="book-report">'+renderBookSections(page)+'</div>'+bookOrnament+'<p class="book-folio">Cabinet Médical de Rhodes · '+(bookPage+1)+'</p>';
@@ -2574,7 +2581,7 @@ function renderBookIndex(){
  const term=$('bookSearch').value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
  const opened=new Set(Array.from($('bookIndex').querySelectorAll('details[open]'),el=>el.dataset.bookCategory));
  const pages=bookPages();
- $('bookIndex').innerHTML='<button class="book-tab" data-page="0">⚕ Serment des médecins</button>'+bookCategories.map(c=>{
+ $('bookIndex').innerHTML='<button class="book-tab" data-page="0">⚕ Serment des médecins</button>'+bookSharedPages.filter(p=>[p.title,p.content].join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(term)).map(p=>'<button class="book-tab" data-page="'+pages.findIndex(x=>x.id===p.id)+'">📜 '+esc(p.title)+'</button>').join('')+bookCategories.map(c=>{
   const list=pages.map((r,i)=>({...r,page:i})).filter(r=>r.category_id===c.id && [r.title,r.subcategory,r.body].join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().includes(term));
   if(!list.length)return '';
   return '<details class="book-divider" data-book-category="'+esc(c.id)+'"'+(term||opened.has(c.id)||list.some(r=>r.page===bookPage)?' open':'')+'><summary>'+esc(c.name)+' <small>'+list.length+'</small></summary>'+[...new Set(list.map(r=>r.subcategory))].map(sub=>
@@ -2685,6 +2692,9 @@ $('bookPrev').addEventListener('click',()=>turnBook(bookPage-1));
 $('bookNext').addEventListener('click',()=>turnBook(bookPage+1));
 $('bookHome').addEventListener('click',()=>turnBook(-1));
 $('bookRefresh').addEventListener('click',loadBook);
+$('bookSharedAdd').addEventListener('click',async()=>{if(!canManageSharedBook())return;const title=prompt('Titre de la nouvelle page commune :');if(!title?.trim())return;const content=prompt('Contenu de la page (retours à la ligne possibles) :');if(content===null)return;const {error}=await db.from('consultation_shared_pages').insert({title:title.trim(),content,sort_order:bookSharedPages.length});if(error){dbError(error);return;}await loadBook();bookPage=bookPages().findIndex(p=>p.type==='shared'&&p.title===title.trim());renderBook();toast('Page commune ajoutée à tous les carnets.');});
+$('bookSharedEdit').addEventListener('click',async()=>{const page=bookPages()[bookPage];if(!canManageSharedBook()||page?.type!=='shared')return;const title=prompt('Titre de la page :',page.title);if(!title?.trim())return;const content=prompt('Contenu de la page :',page.content);if(content===null)return;const {error}=await db.from('consultation_shared_pages').update({title:title.trim(),content,updated_at:new Date().toISOString()}).eq('id',page.id);if(error){dbError(error);return;}await loadBook();bookPage=bookPages().findIndex(p=>p.id===page.id);renderBook();toast('Page commune mise à jour.');});
+$('bookSharedDelete').addEventListener('click',async()=>{const page=bookPages()[bookPage];if(!canManageSharedBook()||page?.type!=='shared'||!confirm('Supprimer cette page commune pour tous les utilisateurs ?'))return;const {error}=await db.from('consultation_shared_pages').delete().eq('id',page.id);if(error){dbError(error);return;}await loadBook();bookPage=Math.max(0,bookPage-1);renderBook();toast('Page commune supprimée.');});
 $('bookEdit').addEventListener('click',()=>openBookEditor(false));
 $('bookNew').addEventListener('click',()=>openBookEditor(true));
 $('bookCloseEditor').addEventListener('click',()=>{if(confirm('Fermer sans enregistrer les modifications ?'))$('bookEditor').close();});
