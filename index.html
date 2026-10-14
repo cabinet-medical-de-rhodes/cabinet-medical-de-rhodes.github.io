@@ -2570,8 +2570,8 @@ function renderBook(){
  $('bookNew').hidden=!canEditBook();$('bookCategoryEdit').hidden=!canEditBook();$('bookSharedManage').hidden=!isAdmin;
  $('bookPrev').disabled=bookPage<0;$('bookNext').disabled=bookPage>=pages.length-1||!bookLoaded;
  $('bookCounter').textContent=bookPage<0?'Édition 1889':(bookPage+1)+' / '+pages.length;
- $('bookCopy').hidden=!page?.id;
- $('bookReset').hidden=!page?.id;
+ $('bookCopy').hidden=!page?.id||page?.type==='shared';
+ $('bookReset').hidden=!page?.id||page?.type==='shared';
  if(page?.type==='oath'){
   $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">Cabinet Médical de Rhodes</p><h2>Serment des médecins</h2><div class="book-oath">'+bookOath.map(t=>'<p>'+esc(t)+'</p>').join('')+'</div>'+bookOrnament+'<p class="book-folio">Première page · Honneur & probité</p>';
  }else if(page?.type==='shared'){
@@ -2698,8 +2698,9 @@ $('bookNext').addEventListener('click',()=>turnBook(bookPage+1));
 $('bookHome').addEventListener('click',()=>turnBook(-1));
 $('bookRefresh').addEventListener('click',loadBook);
 $('bookEdit').addEventListener('click',()=>{const p=bookPages()[bookPage];if(p?.type==='shared'){if(isAdmin)openSharedEditor(p);return;}openBookEditor(false);});
-function safeSharedHtml(html){const box=document.createElement('div');box.innerHTML=String(html||'');box.querySelectorAll('script,style,iframe,object,embed,form,input,button,textarea,link,meta').forEach(n=>n.remove());box.querySelectorAll('*').forEach(n=>{Array.from(n.attributes).forEach(a=>{if(/^on/i.test(a.name)||((a.name==='href'||a.name==='src')&&!/^(https?:|mailto:|#)/i.test(a.value)))n.removeAttribute(a.name);});});return box.innerHTML;}
-function openSharedEditor(page=null){if(!isAdmin)return;const p=page||null;$('bookSharedForm').dataset.id=p?.id||'';$('bookSharedTitle').value=p?.title||'';$('bookSharedContent').innerHTML=p?.content||'';$('bookSharedHeading').textContent=p?'Modifier une page commune':'Ajouter une page commune';$('bookSharedDelete').hidden=!p;$('bookSharedEditor').showModal();}
+function sharedPlainToHtml(text){return String(text||'').split(/\\n{2,}/).map(p=>'<p>'+esc(p).replace(/\\n/g,'<br>')+'</p>').join('');}
+function safeSharedHtml(html){const raw=String(html||'');const box=document.createElement('div');box.innerHTML=/<[a-z][\\s\\S]*>/i.test(raw)?raw:sharedPlainToHtml(raw);box.querySelectorAll('script,style,iframe,object,embed,form,input,button,textarea,link,meta').forEach(n=>n.remove());box.querySelectorAll('*').forEach(n=>{Array.from(n.attributes).forEach(a=>{if(/^on/i.test(a.name)||((a.name==='href'||a.name==='src')&&!/^(https?:|mailto:|#)/i.test(a.value)))n.removeAttribute(a.name);});});return box.innerHTML;}
+function openSharedEditor(page=null){if(!isAdmin)return;const p=page||null;$('bookSharedForm').dataset.id=p?.id||'';$('bookSharedTitle').value=p?.title||'';$('bookSharedContent').innerHTML=p?( /<[a-z][\\s\\S]*>/i.test(p.content||'')?p.content:sharedPlainToHtml(p.content)):'';$('bookSharedHeading').textContent=p?'Modifier une page commune':'Ajouter une page commune';$('bookSharedDelete').hidden=!p;$('bookSharedEditor').showModal();}
 $('bookSharedManage').addEventListener('click',()=>{if(!isAdmin)return;const pages=bookSharedPages.map((p,i)=>(i+1)+'. '+p.title).join('\n');const choice=prompt('Pages communes existantes :\n'+(pages||'Aucune')+'\n\nEntre le numéro d’une page à modifier, ou laisse vide pour en créer une nouvelle.');if(choice===null)return;if(!choice.trim()){openSharedEditor();return;}const p=bookSharedPages[Number(choice)-1];if(p)openSharedEditor(p);else toast('Numéro de page invalide.');});
 $('bookSharedEditor').addEventListener('click',e=>{const b=e.target.closest('[data-shared-command]');if(!b)return;$('bookSharedContent').focus();document.execCommand(b.dataset.sharedCommand,false,b.dataset.sharedValue||null);});
 $('bookSharedClose').addEventListener('click',()=> $('bookSharedEditor').close());
