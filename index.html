@@ -2570,7 +2570,7 @@ function renderBook(){
  if(page?.type==='oath'){
   $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">Cabinet Médical de Rhodes</p><h2>Serment des médecins</h2><div class="book-oath">'+bookOath.map(t=>'<p>'+esc(t)+'</p>').join('')+'</div>'+bookOrnament+'<p class="book-folio">Première page · Honneur & probité</p>';
  }else if(page?.type==='shared'){
-  $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">Cabinet Médical de Rhodes · Consigne commune</p><h2>'+esc(page.title)+'</h2><div class="book-report book-shared-content">'+sharedContentToHtml(page.content)+'</div>'+bookOrnament+'<p class="book-folio">Page commune · '+(bookPage+1)+'</p>';
+  $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">Cabinet Médical de Rhodes · Consigne commune</p><h2>'+esc(page.title)+'</h2><div class="book-report book-shared-content">'+esc(page.content).replace(/\n/g,'<br>')+'</div>'+bookOrnament+'<p class="book-folio">Page commune · '+(bookPage+1)+'</p>';
  }else if(page){
   const cat=bookCategories.find(c=>c.id===page.category_id);
   $('bookPaper').innerHTML=bookOrnament+'<p class="book-kicker">'+esc(cat?.name)+' · '+esc(page.subcategory)+'</p><h2>'+esc(page.title)+'</h2><div class="book-report">'+renderBookSections(page)+'</div>'+bookOrnament+'<p class="book-folio">Cabinet Médical de Rhodes · '+(bookPage+1)+'</p>';
@@ -2692,25 +2692,13 @@ $('bookPrev').addEventListener('click',()=>turnBook(bookPage-1));
 $('bookNext').addEventListener('click',()=>turnBook(bookPage+1));
 $('bookHome').addEventListener('click',()=>turnBook(-1));
 $('bookRefresh').addEventListener('click',loadBook);
-function escapeSharedHtml(value){return String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
-function sharedContentToHtml(value){const raw=String(value||'');if(!raw.includes('<'))return escapeSharedHtml(raw).replace(/\\n/g,'<br>');return cleanSharedHtml(raw);}
-function cleanSharedHtml(value){
- const doc=new DOMParser().parseFromString(String(value||''),'text/html');
- const allowed=new Set(['B','STRONG','I','EM','U','BR','P','DIV','UL','OL','LI','H3','H4']);
- const walk=node=>{for(const child of [...node.childNodes]){if(child.nodeType===1){if(!allowed.has(child.tagName)){child.replaceWith(...child.childNodes);continue;}[...child.attributes].forEach(a=>child.removeAttribute(a.name));walk(child);}else if(child.nodeType!==3)child.remove();}};
- walk(doc.body);return doc.body.innerHTML;
-}
-document.querySelectorAll('#bookSharedEditor [data-format]').forEach(button=>button.addEventListener('click',()=>{
- const editor=$('bookSharedRichContent');editor.focus();const cmd=button.dataset.format;
- document.execCommand(cmd,false,button.dataset.value||null);
-}));
 let editingSharedPageId=null;
 function openSharedPageEditor(page=null){
  if(!canManageSharedBook())return;
  editingSharedPageId=page?.id||null;
  $('bookSharedEditorHeading').textContent=page?'Modifier la page commune':'Ajouter une page commune';
  $('bookSharedTitleInput').value=page?.title||'';
- $('bookSharedRichContent').innerHTML=sharedContentToHtml(page?.content||'');
+ $('bookSharedContentInput').value=page?.content||'';
  $('bookSharedEditorSave').textContent=page?'Enregistrer les modifications':'Créer la page';
  $('bookSharedEditor').showModal();
  $('bookSharedTitleInput').focus();
@@ -2720,7 +2708,7 @@ $('bookSharedEdit').addEventListener('click',()=>{const page=bookPages()[bookPag
 $('bookSharedEditorCancel').addEventListener('click',()=>$('bookSharedEditor').close());
 $('bookSharedEditorForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!canManageSharedBook())return;
- const title=$('bookSharedTitleInput').value.trim(),content=cleanSharedHtml($('bookSharedRichContent').innerHTML);
+ const title=$('bookSharedTitleInput').value.trim(),content=$('bookSharedContentInput').value;
  if(!title)return;
  $('bookSharedEditorSave').disabled=true;
  try{
@@ -5443,31 +5431,6 @@ $('navigationSave').addEventListener('click',async()=>{
 
 </script>
 <div class="startup-status" role="status" aria-live="polite">Chargement du cabinet…</div>
-<style id="book-shared-editor-style">
-#bookSharedEditor{width:min(900px,94vw);max-width:94vw;max-height:90vh;padding:0;border:1px solid #9a784e;border-radius:12px;background:#f3e8cf;color:#332316;box-shadow:0 18px 70px #0009}
-#bookSharedEditor::backdrop{background:#100b08c9;backdrop-filter:blur(3px)}
-#bookSharedEditor .shared-editor-head{padding:18px 24px;background:#38251a;color:#f5e4c2;border-bottom:1px solid #9a784e}
-#bookSharedEditor .shared-editor-head h2{margin:0;font-family:Georgia,serif;font-size:24px}
-#bookSharedEditor .shared-editor-head p{margin:6px 0 0;font-size:13px;opacity:.85}
-#bookSharedEditor .shared-editor-body{padding:22px 24px;display:flex;flex-direction:column;gap:14px}
-#bookSharedEditor label{display:flex;flex-direction:column;gap:7px;font-weight:700;font-size:14px}
-#bookSharedEditor input,#bookSharedEditor textarea{box-sizing:border-box;width:100%;border:1px solid #b69a72;border-radius:7px;background:#fffaf0;color:#302319;padding:12px 14px;font:16px/1.5 Georgia,serif;outline-offset:2px}
-#bookSharedEditor textarea{min-height:48vh;resize:vertical;white-space:pre-wrap}
-#bookSharedEditor input:focus,#bookSharedEditor textarea:focus{border-color:#80572f;box-shadow:0 0 0 3px #80572f26}
-#bookSharedEditor .shared-format-toolbar{display:flex;flex-wrap:wrap;gap:6px;padding:9px;background:#e8d7b7;border:1px solid #c8ad83;border-radius:8px}
-#bookSharedEditor .shared-format-toolbar button{min-width:38px;padding:7px 10px;border:1px solid #b69a72;border-radius:5px;background:#fff8e9;color:#38251a;font-size:15px}
-#bookSharedEditor .shared-format-toolbar button:hover{background:#ddc39a}
-#bookSharedEditor .shared-rich-editor{box-sizing:border-box;width:100%;min-height:42vh;max-height:58vh;overflow:auto;border:1px solid #b69a72;border-radius:7px;background:#fffaf0;color:#302319;padding:14px;font:16px/1.6 Georgia,serif;outline-offset:2px}
-#bookSharedEditor .shared-rich-editor:focus{border-color:#80572f;box-shadow:0 0 0 3px #80572f26}
-#bookSharedEditor .shared-rich-editor:empty:before{content:attr(data-placeholder);color:#9b8a75}
-#bookSharedEditor .shared-rich-editor h3{font-size:1.25em;margin:.7em 0 .3em}
-#bookSharedEditor .shared-rich-editor ul,#bookSharedEditor .shared-rich-editor ol{padding-left:28px}
-\n#bookSharedEditor .shared-editor-help{font-size:12px;color:#725a42;margin-top:-6px}
-#bookSharedEditor .shared-editor-actions{display:flex;justify-content:flex-end;gap:10px;padding:14px 24px;border-top:1px solid #d1bd9c;background:#ead9b9}
-@media(max-width:600px){#bookSharedEditor .shared-editor-body{padding:14px}#bookSharedEditor textarea{min-height:42vh}#bookSharedEditor .shared-editor-actions{padding:12px;flex-wrap:wrap}}
-</style>
-<dialog id="bookSharedEditor" aria-labelledby="bookSharedEditorHeading"><form id="bookSharedEditorForm"><div class="shared-editor-head"><h2 id="bookSharedEditorHeading">Page commune du carnet</h2><p>Le contenu sera partagé avec tous les utilisateurs du cabinet.</p></div><div class="shared-editor-body"><label for="bookSharedTitleInput">Titre de la page<input id="bookSharedTitleInput" maxlength="200" required placeholder="Ex. Procédure d'intervention"></label><div class="shared-editor-field"><label for="bookSharedRichContent">Contenu de la page</label><div class="shared-format-toolbar" role="toolbar" aria-label="Mise en forme du texte">
-<button type="button" data-format="bold" title="Gras"><strong>G</strong></button><button type="button" data-format="italic" title="Italique"><em>I</em></button><button type="button" data-format="underline" title="Souligné"><u>S</u></button><button type="button" data-format="insertUnorderedList" title="Liste à puces">• Liste</button><button type="button" data-format="insertOrderedList" title="Liste numérotée">1. Liste</button><button type="button" data-format="formatBlock" data-value="h3" title="Titre de section">Titre</button><button type="button" data-format="removeFormat" title="Retirer la mise en forme">Effacer le style</button>
-</div><div id="bookSharedRichContent" class="shared-rich-editor" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Rédigez le contenu complet ici…" ></div></div><div class="shared-editor-help">Vous pouvez saisir un texte long et utiliser les retours à la ligne.</div></div><div class="shared-editor-actions"><button type="button" class="btn secondary" id="bookSharedEditorCancel">Annuler</button><button type="submit" class="btn good" id="bookSharedEditorSave">Enregistrer la page</button></div></form></dialog>
+
 </body>
 </html>
