@@ -210,7 +210,12 @@ input:focus,select:focus,textarea:focus {border-color:var(--rd-mid);box-shadow:0
 
 /* Historique : reprendre explicitement le même parchemin que les autres tableaux. */
 #history .table-wrap {
-  background:var(--rd-paper) var(--rh-parchment) center / 100% 100%;
+  /* Garder les proportions du parchemin même lorsque l'historique s'allonge. */
+  background-color:var(--rd-paper);
+  background-image:var(--rh-parchment);
+  background-position:center top;
+  background-size:cover;
+  background-repeat:no-repeat;
   border:1px solid var(--rd-line);
 }
 #history .table-wrap table { background:transparent; }
