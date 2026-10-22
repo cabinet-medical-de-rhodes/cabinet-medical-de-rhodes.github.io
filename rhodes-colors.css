@@ -207,6 +207,17 @@ input:focus,select:focus,textarea:focus {border-color:var(--rd-mid);box-shadow:0
   .card,.card .section-title,.card th,.card td {background:white!important;color:black!important;box-shadow:none}
 }
 
+
+/* Historique : reprendre explicitement le même parchemin que les autres tableaux. */
+#history .table-wrap {
+  background:var(--rd-paper) var(--rh-parchment) center / 100% 100%;
+  border:1px solid var(--rd-line);
+}
+#history .table-wrap table { background:transparent; }
+#history .table-wrap tbody tr td { background:rgba(255,243,214,.24); }
+#history .table-wrap tbody tr:nth-child(even) td { background:rgba(204,176,131,.22); }
+#history .table-wrap tbody tr:hover td { background:rgba(224,195,147,.42); }
+
 /* Bilan mensuel : même registre, même papier, total indépendant des filtres de ligne. */
 .history-profit-summary {
   display:flex;align-items:center;justify-content:space-between;gap:24px;
