@@ -210,18 +210,18 @@ input:focus,select:focus,textarea:focus {border-color:var(--rd-mid);box-shadow:0
 
 /* Historique : reprendre explicitement le même parchemin que les autres tableaux. */
 #history .table-wrap {
-  /* Garder les proportions du parchemin même lorsque l'historique s'allonge. */
-  background-color:var(--rd-paper);
-  background-image:var(--rh-parchment);
-  background-position:center top;
-  background-size:cover;
-  background-repeat:no-repeat;
+  /* Texture à l'échelle de la largeur, répétée verticalement : jamais étirée en hauteur. */
+  background-color:var(--rd-paper) !important;
+  background-image:var(--rh-parchment) !important;
+  background-position:center top !important;
+  background-size:100% auto !important;
+  background-repeat:repeat-y !important;
   border:1px solid var(--rd-line);
 }
-#history .table-wrap table { background:transparent; }
-#history .table-wrap tbody tr td { background:rgba(255,243,214,.24); }
-#history .table-wrap tbody tr:nth-child(even) td { background:rgba(204,176,131,.22); }
-#history .table-wrap tbody tr:hover td { background:rgba(224,195,147,.42); }
+#history .table-wrap table { background:transparent !important; }
+#history .table-wrap tbody tr td { background:rgba(255,243,214,.24) !important; }
+#history .table-wrap tbody tr:nth-child(even) td { background:rgba(204,176,131,.22) !important; }
+#history .table-wrap tbody tr:hover td { background:rgba(224,195,147,.42) !important; }
 
 /* Bilan mensuel : même registre, même papier, total indépendant des filtres de ligne. */
 .history-profit-summary {
