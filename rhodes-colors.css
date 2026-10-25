@@ -210,8 +210,8 @@ input:focus,select:focus,textarea:focus {border-color:var(--rd-mid);box-shadow:0
 
 /* Historique : reprendre explicitement le même parchemin que les autres tableaux. */
 #history .table-wrap {
-  /* Fond uni lin/parchemin : aucune image, donc aucune répétition ni déformation. */
-  background-color:#f3e8cf !important;
+  /* Fond extérieur uni lin foncé, sans image ni répétition. */
+  background-color:#b8a17b !important;
   background-image:none !important;
   border:1px solid var(--rd-line);
 }
