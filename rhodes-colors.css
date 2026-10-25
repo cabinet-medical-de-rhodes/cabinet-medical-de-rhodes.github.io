@@ -210,12 +210,13 @@ input:focus,select:focus,textarea:focus {border-color:var(--rd-mid);box-shadow:0
 
 /* Historique : reprendre explicitement le même parchemin que les autres tableaux. */
 #history .table-wrap {
-  /* Texture à l'échelle de la largeur, répétée verticalement : jamais étirée en hauteur. */
+  /* Un seul parchemin, fixe dans la fenêtre : pas de mosaïque ni d'étirement selon le nombre de lignes. */
   background-color:var(--rd-paper) !important;
   background-image:var(--rh-parchment) !important;
   background-position:center top !important;
-  background-size:100% auto !important;
-  background-repeat:repeat-y !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+  background-attachment:fixed !important;
   border:1px solid var(--rd-line);
 }
 #history .table-wrap table { background:transparent !important; }
