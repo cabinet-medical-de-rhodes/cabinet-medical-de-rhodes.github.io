@@ -208,10 +208,17 @@ input:focus,select:focus,textarea:focus {border-color:var(--rd-mid);box-shadow:0
 }
 
 
-/* Historique : fond uni lin foncé derrière les panneaux, sans toucher au fond des tableaux. */
+/* Historique : couvrir toute la zone derrière les panneaux, pas l'intérieur des tableaux. */
 #history.view {
-  background-color:#b8a17b !important;
+  background:#b8a17b !important;
   background-image:none !important;
+  background-color:#b8a17b !important;
+  background-attachment:initial !important;
+  background-size:auto !important;
+  background-repeat:no-repeat !important;
+  min-height:100vh;
+  padding:20px;
+  box-sizing:border-box;
 }
 #history .table-wrap {
   background:transparent !important;
