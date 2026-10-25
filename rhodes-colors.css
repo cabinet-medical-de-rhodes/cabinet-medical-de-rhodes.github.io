@@ -245,21 +245,20 @@ input:focus,select:focus,textarea:focus {border-color:var(--rd-mid);box-shadow:0
 
 
 /* Historique : typographie renforcée pour améliorer la lecture. */
-#history,
-#history table,
+#history *,
+.history-profit-summary * { font-weight:700 !important; }
 #history table th,
 #history table td,
-#history table th *,
-#history table td *,
 #history label,
 #history input,
 #history select,
 #history button,
 #history .muted,
 #history small,
-#history strong,
-.history-profit-summary,
-.history-profit-summary * {
-  font-size: calc(1em + 1px) !important;
-  font-weight: 700 !important;
+.history-profit-summary h4,
+.history-profit-summary p,
+.history-profit-summary small,
+#historyProfitMonth,
+#historyMonthProfit {
+  font-size:calc(100% + 1px) !important;
 }
