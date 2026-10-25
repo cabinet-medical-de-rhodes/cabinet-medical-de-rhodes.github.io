@@ -208,26 +208,23 @@ input:focus,select:focus,textarea:focus {border-color:var(--rd-mid);box-shadow:0
 }
 
 
-/* Historique : couvrir toute la zone derrière les panneaux, pas l'intérieur des tableaux. */
+/* Historique : intérieur lin clair, extérieur lin foncé. */
 #history.view {
-  background:#b8a17b !important;
-  background-image:none !important;
   background-color:#b8a17b !important;
-  background-attachment:initial !important;
-  background-size:auto !important;
-  background-repeat:no-repeat !important;
+  background-image:none !important;
   min-height:100vh;
   padding:20px;
   box-sizing:border-box;
 }
 #history .table-wrap {
-  background:transparent !important;
+  background:#f3e8cf !important;
+  background-image:none !important;
   border:1px solid var(--rd-line);
 }
-#history .table-wrap table { background:transparent !important; }
-#history .table-wrap tbody tr td { background:rgba(255,243,214,.24) !important; }
-#history .table-wrap tbody tr:nth-child(even) td { background:rgba(204,176,131,.22) !important; }
-#history .table-wrap tbody tr:hover td { background:rgba(224,195,147,.42) !important; }
+#history .table-wrap table { background:#f3e8cf !important; }
+#history .table-wrap tbody tr td { background:#f3e8cf !important; }
+#history .table-wrap tbody tr:nth-child(even) td { background:#eadbbd !important; }
+#history .table-wrap tbody tr:hover td { background:#e1cfaa !important; }
 
 /* Bilan mensuel : même registre, même papier, total indépendant des filtres de ligne. */
 .history-profit-summary {
