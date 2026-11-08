@@ -3548,13 +3548,14 @@ $('navigationSave').addEventListener('click',async()=>{
         const created=u.created_at?new Intl.DateTimeFormat("fr-FR",{day:"2-digit",month:"2-digit",year:"numeric"}).format(new Date(u.created_at)):"—";
         const grade=u.medical_grade||"apprenti";
         const isChef=self && grade==="chef_de_cabinet";
+        const canAppointChief=currentProfile?.medical_grade==="chef_de_cabinet";
         const gradeControl=isChef
           ? '<span class="pill gold">Chef de cabinet</span>'
           : `<select class="user-grade-select" aria-label="Grade de ${esc(u.display_name||u.email||"l'utilisateur")}">
               <option value="apprenti" ${grade==="apprenti"?"selected":""}>Apprenti médecin</option>
               <option value="medecin" ${grade==="medecin"?"selected":""}>Médecin</option>
               <option value="medecin_adjoint" ${grade==="medecin_adjoint"?"selected":""}>Médecin adjoint</option>
-              <option value="chef_de_cabinet" ${grade==="chef_de_cabinet"?"selected":""}>Chef de cabinet</option>
+              ${canAppointChief?'<option value="chef_de_cabinet" '+(grade==="chef_de_cabinet"?"selected":"")+'>Chef de cabinet</option>':''}
               <option value="en_voyage" ${grade==="en_voyage"?"selected":""}>En voyage</option>
             </select>`;
         const gradeAction=isChef?"":`<button class="btn secondary save-user-grade-btn" data-id="${esc(u.id)}">Enregistrer le grade</button>`;
@@ -5036,14 +5037,22 @@ $('navigationSave').addEventListener('click',async()=>{
       const grade=tr?.querySelector(".user-grade-select")?.value||"apprenti";
       try{
         gradeBtn.disabled=true;
+        if(grade==="chef_de_cabinet"){
+          if(currentProfile?.medical_grade!=="chef_de_cabinet")throw new Error("Seul le chef de cabinet actuel peut nommer son successeur.");
+          const targetName=tr?.querySelector(".user-display-name")?.value||"ce membre";
+          if(!confirm("Nommer "+targetName+" chef de cabinet ?\\n\\nTu seras automatiquement rétrogradé au grade de médecin adjoint et conserveras les permissions d’administration."))return;
+          const {error}=await db.rpc("appoint_cabinet_chief",{p_user_id:gradeBtn.dataset.id});
+          if(error)throw error;
+          await checkAccess(true);
+          await loadUsers();
+          toast("Nouveau chef de cabinet nommé. Tu es désormais médecin adjoint.");
+          return;
+        }
         const {error}=await db.rpc("admin_set_medical_grade",{p_user_id:gradeBtn.dataset.id,p_grade:grade});
         if(error)throw error;
-        if(gradeBtn.dataset.id===currentUser?.id){
-          if(currentProfile)currentProfile.medical_grade=grade;
-          $("userRole").textContent=gradeLabel(grade)+(isAdmin?" · Administrateur":"");
-        }
+        if(gradeBtn.dataset.id===currentUser?.id)await checkAccess(true);
         await loadUsers();
-        toast("Grade modifié.");
+        toast("Grade modifié. Les permissions ont été actualisées.");
       }catch(err){dbError(err);}finally{gradeBtn.disabled=false;}
       return;
     }
@@ -5252,7 +5261,7 @@ $('navigationSave').addEventListener('click',async()=>{
     currentProfile=Array.isArray(data)?(data[0]||null):(data||null);
     if(syncMovementTypes())fillMovementResources();
     isAdmin=currentProfile?.role==="admin" && currentProfile?.access_status==="approved";
-    isAdjoint=!isAdmin && currentProfile?.medical_grade==="medecin_adjoint" && currentProfile?.access_status==="approved";
+    isAdjoint=currentProfile?.medical_grade==="medecin_adjoint" && currentProfile?.access_status==="approved";
     document.body.classList.toggle("is-admin",isAdmin);
     document.body.classList.toggle("is-adjoint",isAdjoint);
     if(currentProfile?.access_status==="approved"){
