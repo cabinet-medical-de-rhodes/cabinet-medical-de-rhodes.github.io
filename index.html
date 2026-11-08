@@ -2333,7 +2333,8 @@ textarea::placeholder{
       apprenti:"Apprenti médecin",
       medecin:"Médecin",
       medecin_adjoint:"Médecin adjoint",
-      chef_de_cabinet:"Chef de cabinet"
+      chef_de_cabinet:"Chef de cabinet",
+      en_voyage:"En voyage"
     }[g]||"Apprenti médecin";
   }
   function dbError(error, fallback="Une erreur est survenue."){
@@ -3553,6 +3554,7 @@ $('navigationSave').addEventListener('click',async()=>{
               <option value="apprenti" ${grade==="apprenti"?"selected":""}>Apprenti médecin</option>
               <option value="medecin" ${grade==="medecin"?"selected":""}>Médecin</option>
               <option value="medecin_adjoint" ${grade==="medecin_adjoint"?"selected":""}>Médecin adjoint</option>
+              <option value="en_voyage" ${grade==="en_voyage"?"selected":""}>En voyage</option>
             </select>`;
         const gradeAction=isChef?"":`<button class="btn secondary save-user-grade-btn" data-id="${esc(u.id)}">Enregistrer le grade</button>`;
         const deleteAction=self?"":`<button class="btn danger delete-user-btn" data-id="${esc(u.id)}" data-name="${esc(u.display_name||u.email||"ce compte")}">Supprimer le compte</button>`;
