@@ -199,6 +199,10 @@
     .btn.good{background:linear-gradient(#557348,#365436);border-color:#829a67}
     .btn.danger{background:linear-gradient(#87251b,#5d140e);border-color:#bd6651}
     .btn:disabled{opacity:.4;cursor:not-allowed;filter:grayscale(.4)}
+    body.is-traveler .view:not(#bureau) button,
+    body.is-traveler .view:not(#bureau) input,
+    body.is-traveler .view:not(#bureau) select,
+    body.is-traveler .view:not(#bureau) textarea{pointer-events:none!important;opacity:.58!important;filter:grayscale(.25)}
     .btn.big{font-size:14px;padding:13px 18px}
 
     .table-wrap{overflow:auto}
@@ -2071,6 +2075,7 @@ textarea::placeholder{
   let currentProfile = null;
   let isAdmin = false;
   let isAdjoint = false;
+  let isTraveler = false;
   let isRefreshing = false;
   let refreshTimer = null;
   let bureauChannel = null;
@@ -3716,7 +3721,7 @@ $('navigationSave').addEventListener('click',async()=>{
 
     box.innerHTML=rows.map((m,index)=>{
       const mine=m.author_id===currentUser?.id;
-      const canDelete=mine||isAdmin;
+      const canDelete=!isTraveler&&(mine||isAdmin);
       let attachment="";
       if(m.external_url && m.external_provider==="giphy"){
         const target=m.external_page_url||m.external_url;
@@ -5221,6 +5226,7 @@ $('navigationSave').addEventListener('click',async()=>{
     document.body.classList.remove("locked");
     document.body.classList.toggle("is-admin",isAdmin);
     document.body.classList.toggle("is-adjoint",isAdjoint);
+    document.body.classList.toggle("is-traveler",isTraveler);
     document.body.classList.toggle("is-book-supervisor",isBookSupervisor());
     $("userEmail").textContent=currentUser?.email||"";
     $("userName").textContent=currentProfile?.display_name||currentUser?.email||"Médecin";
@@ -5229,7 +5235,7 @@ $('navigationSave').addEventListener('click',async()=>{
     if(!isBookSupervisor() && document.querySelector("#notebooksAdmin.view.active"))setView("dashboard");
     if(!(isAdmin||isAdjoint) && document.querySelector("#users.view.active"))setView("dashboard");
     loadRemoteState();
-    startEditLockSystem();
+    if(!isTraveler)startEditLockSystem();
     startBureauRealtime();
   }
 
@@ -5263,8 +5269,10 @@ $('navigationSave').addEventListener('click',async()=>{
     if(syncMovementTypes())fillMovementResources();
     isAdmin=currentProfile?.role==="admin" && currentProfile?.access_status==="approved";
     isAdjoint=currentProfile?.medical_grade==="medecin_adjoint" && currentProfile?.access_status==="approved";
+    isTraveler=currentProfile?.medical_grade==="en_voyage" && currentProfile?.access_status==="approved";
     document.body.classList.toggle("is-admin",isAdmin);
     document.body.classList.toggle("is-adjoint",isAdjoint);
+    document.body.classList.toggle("is-traveler",isTraveler);
     if(currentProfile?.access_status==="approved"){
       if(!silent){
         openApp();
