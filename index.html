@@ -3554,6 +3554,7 @@ $('navigationSave').addEventListener('click',async()=>{
               <option value="apprenti" ${grade==="apprenti"?"selected":""}>Apprenti médecin</option>
               <option value="medecin" ${grade==="medecin"?"selected":""}>Médecin</option>
               <option value="medecin_adjoint" ${grade==="medecin_adjoint"?"selected":""}>Médecin adjoint</option>
+              <option value="chef_de_cabinet" ${grade==="chef_de_cabinet"?"selected":""}>Chef de cabinet</option>
               <option value="en_voyage" ${grade==="en_voyage"?"selected":""}>En voyage</option>
             </select>`;
         const gradeAction=isChef?"":`<button class="btn secondary save-user-grade-btn" data-id="${esc(u.id)}">Enregistrer le grade</button>`;
