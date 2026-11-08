@@ -3547,7 +3547,7 @@ $('navigationSave').addEventListener('click',async()=>{
         }
         const created=u.created_at?new Intl.DateTimeFormat("fr-FR",{day:"2-digit",month:"2-digit",year:"numeric"}).format(new Date(u.created_at)):"—";
         const grade=u.medical_grade||"apprenti";
-        const isChef=self && grade==="chef_de_cabinet";
+        const isChef=grade==="chef_de_cabinet";
         const canAppointChief=currentProfile?.medical_grade==="chef_de_cabinet";
         const gradeControl=isChef
           ? '<span class="pill gold">Chef de cabinet</span>'
@@ -5044,13 +5044,14 @@ $('navigationSave').addEventListener('click',async()=>{
           const {error}=await db.rpc("appoint_cabinet_chief",{p_user_id:gradeBtn.dataset.id});
           if(error)throw error;
           await checkAccess(true);
+          openApp();
           await loadUsers();
           toast("Nouveau chef de cabinet nommé. Tu es désormais médecin adjoint.");
           return;
         }
         const {error}=await db.rpc("admin_set_medical_grade",{p_user_id:gradeBtn.dataset.id,p_grade:grade});
         if(error)throw error;
-        if(gradeBtn.dataset.id===currentUser?.id)await checkAccess(true);
+        if(gradeBtn.dataset.id===currentUser?.id){await checkAccess(true);openApp();}
         await loadUsers();
         toast("Grade modifié. Les permissions ont été actualisées.");
       }catch(err){dbError(err);}finally{gradeBtn.disabled=false;}
